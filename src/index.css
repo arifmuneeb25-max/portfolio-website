@@ -1,0 +1,533 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    /*
+     * Brand design tokens — single source of truth for colour. Tailwind maps
+     * semantic colour names (surface, heading, body, gold, muted, placeholder)
+     * to these in tailwind.config.js, so components reference tokens, never raw
+     * hex. Fonts live in the same config (font-sans = Almarai, the workhorse;
+     * font-serif = Instrument Serif italic accent).
+     */
+    --surface: #101a30; /* page background */
+    --surface-rgb: 16, 26, 48; /* ^ same, as rgb channels for rgba() scrims */
+    --heading: #f2ede4; /* primary / heading text (warm white) */
+    --body: #b9c0cd; /* body / brief text (muted) */
+    --gold: #d9a441; /* gold accent — indices, key words, CTA */
+    --muted: #8a94a8; /* eyebrow / muted label */
+    --muted-dim: #6b7488; /* dimmer muted — inactive act-index / stage labels */
+    --dot-muted: #41527a; /* inactive process dots */
+    --track: rgba(255, 255, 255, 0.1); /* process track line */
+    --placeholder: #182444; /* image placeholder fill */
+    --error: #e5877f; /* soft red — form validation errors */
+    --hairline: rgba(255, 255, 255, 0.06); /* spine + hairlines */
+    --hairline-strong: rgba(255, 255, 255, 0.08); /* nav / header hairline */
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink font-sans text-cream antialiased;
+    font-weight: 400;
+    font-size: 16px;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Visible, on-brand keyboard focus states. */
+  :focus-visible {
+    outline: none;
+    @apply ring-2 ring-gold ring-offset-2 ring-offset-surface rounded-sm;
+  }
+
+  ::selection {
+    background: rgba(217, 164, 65, 0.3);
+    color: var(--heading);
+  }
+}
+
+@layer components {
+  /* Unified page container with responsive gutters:
+   * base: 20px (px-5), 640: 24px (sm:px-6), 768: 32px (md:px-8), 1024: 48px (lg:px-12), 1280: 64px (xl:px-16)
+   */
+  .site-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @media (min-width: 640px) {
+    .site-container {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+  @media (min-width: 768px) {
+    .site-container {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .site-container {
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .site-container {
+      padding-left: 64px;
+      padding-right: 64px;
+    }
+  }
+
+  /* Footer social button — 44px x 44px hit area for mobile touch accessibility. */
+  .footer-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(255, 255, 255, 0.18);
+    color: var(--body);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .footer-social:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* =====================================================================
+   * Services — editorial zigzag scroll page.
+   * Reveal + parallax primitives; per-block offsets are set inline in JSX.
+   * ===================================================================== */
+  .svc-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 96px; /* vertical rhythm between blocks */
+  }
+
+  /*
+   * The zigzag section (services 02–07). It carries the spine, so the spine
+   * spans exactly from the top of block 02 to the bottom of block 07.
+   */
+  .svc-zigzag {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 96px;
+  }
+
+  /* Center spine — 1px hairline down the middle, behind the blocks. */
+  .svc-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+  }
+
+  /* A reveal target: hidden then eased into place by Intersection Observer. */
+  .svc-block {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translate(var(--reveal-x, 0px), 26px);
+    transition:
+      opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .svc-block.is-visible {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* Off-center alignment along the spine (desktop). */
+  .svc-center {
+    width: 100%;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .svc-right {
+    width: calc(50% - 24px);
+    max-width: 460px;
+    margin-left: auto;
+  }
+  .svc-left {
+    width: calc(50% - 24px);
+    max-width: 460px;
+    margin-right: auto;
+  }
+  .svc-text {
+    min-width: 0;
+  }
+
+  .svc-inner {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .svc-center .svc-inner {
+    justify-content: center;
+  }
+  .svc-right .svc-inner {
+    flex-direction: row-reverse;
+  }
+
+  .svc-image {
+    flex: 0 0 260px; /* tall portrait — ~260 x 325 at 4/5 */
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    background: var(--placeholder);
+    transform: translateY(var(--parallax-y, 0px));
+    will-change: transform;
+    overflow: hidden;
+  }
+
+  .svc-index {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .svc-heading {
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: 500;
+    color: var(--heading);
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .svc-brief {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body);
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .svc-block.is-visible .svc-heading {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+  .svc-block.is-visible .svc-brief {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
+
+  /* Shared CTA button — min 44px height for mobile touch targets. */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 12px 28px;
+    border: 0.5px solid var(--gold);
+    border-radius: 6px;
+    color: var(--gold);
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    background: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .cta-btn:hover {
+    background: var(--gold);
+    color: var(--surface);
+  }
+
+  /* Mobile Services: collapse to single centered column below 768px. */
+  @media (max-width: 767px) {
+    .svc-spine {
+      display: none;
+    }
+    .svc-block {
+      --reveal-x: 0px !important;
+      width: 100% !important;
+      max-width: 480px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .svc-inner,
+    .svc-right .svc-inner {
+      flex-direction: column !important;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .svc-image {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      transform: none !important;
+    }
+  }
+
+  /* =====================================================================
+   * About — Five Acts.
+   * ===================================================================== */
+  .reveal-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    word-break: keep-all;
+  }
+  .is-revealed .reveal-word {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--i, 0) * 0.12s);
+  }
+
+  .about-act {
+    position: relative;
+    top: 0;
+    background: rgba(255, 255, 255, 0.02);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      top 0.3s ease,
+      border-color 0.3s ease;
+    will-change: opacity, transform;
+  }
+  @media (min-width: 640px) {
+    .about-act {
+      padding: 28px;
+    }
+  }
+  @media (min-width: 768px) {
+    .about-act {
+      padding: 40px;
+    }
+  }
+  .about-act.is-revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .act-title-settle {
+    transform: scale(1.04);
+    transform-origin: left;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .is-revealed .act-title-settle {
+    transform: scale(1);
+  }
+  .about-act.is-revealed:hover {
+    top: -4px;
+    border-color: rgba(217, 164, 65, 0.25);
+  }
+
+  .reveal-body {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .is-revealed .reveal-body {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .act-index-item {
+    color: var(--muted-dim);
+    transition: color 0.3s ease;
+  }
+  .act-index-item.is-active {
+    color: var(--gold);
+  }
+
+  .scroll-hint {
+    animation: about-bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes about-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
+  }
+
+  /* =====================================================================
+   * THE METHOD
+   * ===================================================================== */
+  .method-track {
+    background: var(--track);
+  }
+  .method-fill {
+    background: var(--gold);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+  .method-dot {
+    transition: background-color 0.3s ease;
+  }
+  .method-label {
+    transition: color 0.3s ease;
+  }
+  .method-panel-content {
+    transition: opacity 0.2s ease;
+  }
+
+  /* Contact Form Inputs — font-size: 16px to prevent iOS auto-zoom on focus */
+  .contact-input {
+    width: 100%;
+    min-height: 44px;
+    background: transparent;
+    border: 0;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    color: var(--heading);
+    font-size: 16px !important;
+    padding: 10px 0;
+    transition: border-color 0.3s ease;
+  }
+  .contact-input:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom-color: var(--gold);
+  }
+  .contact-input::placeholder {
+    color: var(--muted-dim);
+  }
+
+  .contact-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+  .contact-select option {
+    background: var(--surface);
+    color: var(--heading);
+  }
+  .contact-select:invalid {
+    color: var(--muted-dim);
+  }
+
+  .accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  .accordion-body.is-open {
+    grid-template-rows: 1fr;
+  }
+  .accordion-body > div {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .method-fill,
+    .method-dot,
+    .method-label,
+    .method-panel-content,
+    .accordion-body {
+      transition: none !important;
+    }
+  }
+
+  /* TRUSTED BY band — dividers */
+  .trusted-col + .trusted-col {
+    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+  }
+  @media (min-width: 768px) {
+    .trusted-col + .trusted-col {
+      border-top: 0;
+      border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  /* Work page tile reveal */
+  .work-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    will-change: opacity, transform;
+  }
+  .work-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer utilities {
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+}
+
+/*
+ * Reduced Motion & Touch guards:
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .svc-block,
+  .svc-heading,
+  .svc-brief,
+  .svc-image,
+  .reveal-word,
+  .reveal-body,
+  .about-act,
+  .act-title-settle,
+  [data-px-factor],
+  .work-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .about-act.is-revealed:hover {
+    top: 0 !important;
+  }
+
+  .scroll-hint {
+    animation: none !important;
+  }
+}
