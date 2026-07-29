@@ -218,7 +218,7 @@ export default function About() {
       </section>
 
       {/* EXPERIENCE LEAD */}
-      <div className="site-container max-w-6xl pt-12 sm:pt-16 md:pt-20">
+      <div className="ambient-glow site-container max-w-6xl pt-12 sm:pt-16 md:pt-20">
         <div ref={expRef} className={expRevealed ? 'is-revealed' : ''}>
           <div className="reveal-body">
             <p className="max-w-[22ch] text-[clamp(24px,4vw,32px)] font-medium leading-[1.2] tracking-[-0.01em] text-heading">

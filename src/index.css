@@ -13,19 +13,34 @@
      * hex. Fonts live in the same config (font-sans = Almarai, the workhorse;
      * font-serif = Instrument Serif italic accent).
      */
-    --surface: #101a30; /* page background */
+    --surface: #101a30; /* page background — the darkest step */
     --surface-rgb: 16, 26, 48; /* ^ same, as rgb channels for rgba() scrims */
     --heading: #f2ede4; /* primary / heading text (warm white) */
     --body: #b9c0cd; /* body / brief text (muted) */
     --gold: #d9a441; /* gold accent — indices, key words, CTA */
+    --gold-rgb: 217, 164, 65; /* ^ same, as channels for rgba() accents + glow */
     --muted: #8a94a8; /* eyebrow / muted label */
     --muted-dim: #6b7488; /* dimmer muted — inactive act-index / stage labels */
     --dot-muted: #41527a; /* inactive process dots */
     --track: rgba(255, 255, 255, 0.1); /* process track line */
     --placeholder: #182444; /* image placeholder fill */
     --error: #e5877f; /* soft red — form validation errors */
-    --hairline: rgba(255, 255, 255, 0.06); /* spine + hairlines */
-    --hairline-strong: rgba(255, 255, 255, 0.08); /* nav / header hairline */
+
+    /*
+     * Elevation scale — stepped surfaces so the page stops reading as one flat
+     * dark mass. Order, darkest to lightest: page background (--surface) sits
+     * under raised cards (--card-fill), which sit under hairlines. Raised cards
+     * also carry --shadow-card + --edge-highlight so they feel lifted.
+     */
+    --card-fill: rgba(255, 255, 255, 0.035); /* raised card / section wash, one step up */
+    --hairline: rgba(255, 255, 255, 0.08); /* spine + hairlines (one step up again) */
+    --hairline-strong: rgba(255, 255, 255, 0.12); /* card / nav / header borders */
+    --control-line: rgba(255, 255, 255, 0.2); /* input underline + footer social ring */
+    --edge-highlight: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.07); /* 0.5px top lift */
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 18px 40px -20px rgba(0, 0, 0, 0.65);
+    --gold-hairline: rgba(var(--gold-rgb), 0.25); /* gold-tinted hover border */
+    --tile-stack-near: #101726; /* stacked-gallery depth layer, nearer */
+    --tile-stack-far: #090d18; /* stacked-gallery depth layer, farther and darker */
   }
 
   html {
@@ -48,7 +63,7 @@
   }
 
   ::selection {
-    background: rgba(217, 164, 65, 0.3);
+    background: rgba(var(--gold-rgb), 0.3);
     color: var(--heading);
   }
 }
@@ -99,7 +114,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    border: 0.5px solid rgba(255, 255, 255, 0.18);
+    border: 0.5px solid var(--control-line);
     color: var(--body);
     transition: color 0.2s ease, border-color 0.2s ease;
   }
@@ -139,7 +154,7 @@
     left: 50%;
     width: 1px;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hairline);
     z-index: 0;
   }
 
@@ -309,10 +324,11 @@
   .about-act {
     position: relative;
     top: 0;
-    background: rgba(255, 255, 255, 0.02);
-    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    background: var(--card-fill);
+    border: 0.5px solid var(--hairline-strong);
     border-radius: 12px;
     padding: 20px;
+    box-shadow: var(--edge-highlight), var(--shadow-card);
     opacity: 0;
     transform: translateY(40px) scale(0.98);
     transition:
@@ -348,7 +364,7 @@
   }
   .about-act.is-revealed:hover {
     top: -4px;
-    border-color: rgba(217, 164, 65, 0.25);
+    border-color: var(--gold-hairline);
   }
 
   .reveal-body {
@@ -408,7 +424,7 @@
     min-height: 44px;
     background: transparent;
     border: 0;
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 0.5px solid var(--control-line);
     border-radius: 0;
     color: var(--heading);
     font-size: 16px !important;
@@ -460,14 +476,17 @@
     }
   }
 
-  /* TRUSTED BY band — dividers */
+  /* TRUSTED BY band — raised surface + internal dividers */
+  .trusted-band {
+    box-shadow: var(--edge-highlight), var(--shadow-card);
+  }
   .trusted-col + .trusted-col {
-    border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+    border-top: 0.5px solid var(--hairline-strong);
   }
   @media (min-width: 768px) {
     .trusted-col + .trusted-col {
       border-top: 0;
-      border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+      border-left: 0.5px solid var(--hairline-strong);
     }
   }
 
@@ -481,6 +500,63 @@
   .work-reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+
+  /*
+   * Gallery tile image card — a raised surface. Rests with a soft shadow and a
+   * 0.5px top highlight; on hover it lifts a touch further and warms to a gold
+   * hairline ring. (The lift transform lives on the same element via Tailwind.)
+   */
+  .tile-card {
+    box-shadow: var(--edge-highlight), var(--shadow-card);
+  }
+  .group:hover .tile-card {
+    box-shadow: var(--edge-highlight), var(--shadow-card),
+      0 0 0 1px rgba(var(--gold-rgb), 0.4);
+  }
+
+  /*
+   * THE METHOD — lift the interactive stepper / accordion off the page as one
+   * raised panel, distinct from the framing heading above it.
+   */
+  .method-panel-card {
+    background: var(--card-fill);
+    border: 0.5px solid var(--hairline-strong);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--edge-highlight), var(--shadow-card);
+  }
+  @media (min-width: 640px) {
+    .method-panel-card {
+      padding: 32px;
+    }
+  }
+
+  /*
+   * Ambient depth — a very faint radial wash (whisper of gold over deep navy)
+   * anchored top-centre, sitting behind content. Used behind the Home hero and
+   * the About intro. Low opacity by design: depth, never a spotlight.
+   */
+  .ambient-glow {
+    position: relative;
+    z-index: 0;
+  }
+  .ambient-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1100px, 100%);
+    height: min(720px, 80%);
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      60% 60% at 50% 18%,
+      rgba(var(--gold-rgb), 0.05) 0%,
+      rgba(var(--gold-rgb), 0.02) 34%,
+      rgba(var(--surface-rgb), 0) 72%
+    );
   }
 }
 

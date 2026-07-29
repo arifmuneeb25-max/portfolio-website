@@ -91,7 +91,7 @@ export default function TheMethod() {
       </div>
 
       {/* Desktop stepper */}
-      <div className="mt-12 hidden md:block sm:mt-14">
+      <div className="method-panel-card mt-12 hidden md:block sm:mt-14">
         <div className="method-stepper relative">
           <div className="absolute left-[12.5%] right-[12.5%] top-[5px] h-px -translate-y-1/2">
             <div className="method-track absolute inset-0" />
@@ -138,7 +138,7 @@ export default function TheMethod() {
       </div>
 
       {/* Mobile accordion */}
-      <ul className="mt-8 md:hidden">
+      <ul className="method-panel-card mt-8 md:hidden">
         {methodStages.map((stage, i) => {
           const open = active === i
           return (

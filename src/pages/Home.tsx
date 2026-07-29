@@ -11,7 +11,7 @@ import Footer from '../components/Footer'
  */
 export default function Home() {
   return (
-    <main className="bg-ink">
+    <main className="bg-ink ambient-glow">
       <Hero />
       <Thesis />
       <FeaturedWork />
