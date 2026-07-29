@@ -55,7 +55,7 @@ function Tile({
         {hasGallery && (
           <div
             aria-hidden="true"
-            className="absolute inset-0 translate-x-3 translate-y-3 rounded-xl border border-white/5 bg-[#090d18] opacity-70 transition-transform duration-300 ease-out group-hover:translate-x-4 group-hover:translate-y-4"
+            className="absolute inset-0 translate-x-3 translate-y-3 rounded-xl border border-white/5 bg-[var(--tile-stack-far)] opacity-70 transition-transform duration-300 ease-out group-hover:translate-x-4 group-hover:translate-y-4"
             style={{ aspectRatio: item.ratio } as CSSProperties}
           />
         )}
@@ -63,13 +63,13 @@ function Tile({
         {hasGallery && (
           <div
             aria-hidden="true"
-            className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-xl border border-white/10 bg-[#101726] opacity-85 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2"
+            className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-xl border border-white/10 bg-[var(--tile-stack-near)] opacity-85 transition-transform duration-300 ease-out group-hover:translate-x-2 group-hover:translate-y-2"
             style={{ aspectRatio: item.ratio } as CSSProperties}
           />
         )}
 
         <div
-          className="relative z-10 overflow-hidden rounded-xl bg-placeholder transition duration-300 ease-out group-hover:-translate-y-[3px] group-hover:shadow-[0_0_0_1px_rgba(217,164,65,0.4)]"
+          className="tile-card relative z-10 overflow-hidden rounded-xl bg-placeholder transition duration-300 ease-out group-hover:-translate-y-[3px]"
           style={{ aspectRatio: item.ratio } as CSSProperties}
         >
           {type === 'video' ? (
@@ -104,7 +104,7 @@ function Tile({
               {hasGallery && (
                 <div
                   aria-label={`${galleryCount} slides in gallery`}
-                  className="absolute top-3 right-3 z-30 inline-flex items-center gap-1.5 rounded-full bg-[#101a30]/85 border border-white/10 px-2.5 py-1 text-[11px] font-medium tracking-wider text-gold shadow-md backdrop-blur-md"
+                  className="absolute top-3 right-3 z-30 inline-flex items-center gap-1.5 rounded-full bg-[rgba(var(--surface-rgb),0.85)] border border-white/10 px-2.5 py-1 text-[11px] font-medium tracking-wider text-gold shadow-md backdrop-blur-md"
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <rect x="7" y="7" width="14" height="14" rx="2" />
@@ -130,7 +130,7 @@ function Tile({
                   aria-hidden="true"
                   className="absolute inset-0 z-20 hidden items-center justify-center bg-black/40 backdrop-blur-[1px] opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none [@media(hover:hover)]:flex"
                 >
-                  <span className="rounded-full bg-[#101a30]/90 border border-gold/30 px-3.5 py-1.5 text-[11px] font-medium tracking-wide text-cream shadow-lg">
+                  <span className="rounded-full bg-[rgba(var(--surface-rgb),0.9)] border border-gold/30 px-3.5 py-1.5 text-[11px] font-medium tracking-wide text-cream shadow-lg">
                     View {galleryCount} items
                   </span>
                 </div>
@@ -147,7 +147,7 @@ function Tile({
       </div>
 
       <div className="mt-3.5 block w-full text-left">
-        <p className="font-medium text-cream m-0 p-0 block text-base sm:text-lg leading-snug tracking-normal">{item.title}</p>
+        <p className="font-medium text-cream m-0 p-0 block text-base sm:text-lg leading-snug tracking-normal transition-colors duration-300 group-hover:text-gold">{item.title}</p>
         <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-gold leading-normal m-0 p-0 block">{item.note}</p>
       </div>
     </button>
@@ -193,7 +193,7 @@ export default function Work() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-surface text-heading">
       <div className="site-container max-w-6xl py-12 sm:py-16 md:py-24">
-        <p className="text-[11px] uppercase tracking-[0.28em] text-muted sm:text-[12px]">
+        <p className="text-[11px] uppercase tracking-[0.28em] text-gold sm:text-[12px]">
           {view === 'video' ? 'Selected Work' : 'Design Work'}
         </p>
         <p className="mt-3 text-[18px] text-heading sm:mt-4 sm:text-[20px]">

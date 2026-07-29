@@ -13,14 +13,14 @@ export default function TrustedBy() {
       </h2>
 
       <div
-        className="grid grid-cols-1 items-stretch overflow-hidden rounded-xl bg-white/[0.02] md:grid-cols-3"
+        className="trusted-band grid grid-cols-1 items-stretch overflow-hidden rounded-xl bg-[var(--card-fill)] md:grid-cols-3"
         style={{ border: '0.5px solid var(--hairline-strong)' }}
       >
         {trustedBy.map((item, index) => (
           <div
             key={item.name}
             className={`trusted-col flex flex-col justify-start p-6 sm:p-8 ${
-              index < 2 ? 'border-b md:border-b-0 md:border-r border-white/[0.08]' : ''
+              index < 2 ? 'border-b md:border-b-0 md:border-r border-[var(--hairline-strong)]' : ''
             }`}
           >
             <h3 className="text-base font-medium text-heading">{item.name}</h3>
