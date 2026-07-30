@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import Footer from '../components/Footer'
 import TheMethod from '../components/TheMethod'
 import TrustedBy from '../components/TrustedBy'
+import { WordReveal } from '../components/WordReveal'
 import { acts, introLine } from '../data/about'
 import type { Act } from '../data/about'
 
@@ -36,31 +37,6 @@ function useReveal<T extends HTMLElement>(threshold = 0.3) {
   }, [threshold])
 
   return [ref, revealed] as const
-}
-
-type Segment = { text: string; className?: string }
-
-function WordReveal({ segments }: { segments: Segment[] }) {
-  let i = 0
-  return (
-    <>
-      {segments.map((seg, si) =>
-        seg.text.split(' ').map((word, wi) => {
-          const idx = i++
-          return (
-            <span
-              key={`${si}-${wi}`}
-              aria-hidden="true"
-              className={`reveal-word ${seg.className ?? ''}`}
-              style={{ '--i': idx, marginRight: '0.25em' } as CSSProperties}
-            >
-              {word}
-            </span>
-          )
-        }),
-      )}
-    </>
-  )
 }
 
 function ActBlock({ act }: { act: Act }) {
