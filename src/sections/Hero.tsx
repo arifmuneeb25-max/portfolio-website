@@ -36,8 +36,9 @@ export default function Hero() {
         {/* Film grain */}
         <div className="noise-overlay opacity-[0.5] mix-blend-overlay pointer-events-none" />
 
-        {/* Legibility gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+        {/* Legibility gradient. Below 768 the bottom caps at 80% so the video reads
+            through behind the headline. At 768 and up it stays fully opaque, so desktop is unchanged. */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent max-md:from-ink/80 max-md:via-ink/30" />
 
         {/* Hero content — bottom-aligned */}
         <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8 md:p-12 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
