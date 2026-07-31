@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { ArrowRight, ChevronDown, Linkedin } from 'lucide-react'
 import Footer from '../components/Footer'
 import { services } from '../data/services'
@@ -8,6 +8,10 @@ const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const CONTACT_EMAIL = 'hello@muneebarifai.com'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+const WEB3FORMS_KEY = '183912b7-ee8f-4fd2-80cf-74a7c537db05'
 
 const MailIcon = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -70,6 +74,9 @@ export default function Contact() {
   })
   const [errors, setErrors] = useState<Errors>({})
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const botRef = useRef<HTMLInputElement>(null)
 
   const set =
     (field: keyof typeof values) =>
@@ -85,15 +92,48 @@ export default function Contact() {
     return next
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (submitting) return
+    setErrorMsg('')
     const next = validate()
     setErrors(next)
     if (Object.keys(next).length > 0) {
       setSent(false)
       return
     }
-    setSent(true)
-    setValues({ name: '', email: '', phone: '', service: '', message: '' })
+    // Honeypot: a real visitor never checks this hidden box.
+    if (botRef.current?.checked) return
+
+    setSent(false)
+    setSubmitting(true)
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'New enquiry from the portfolio site',
+          from_name: values.name,
+          name: values.name,
+          email: values.email,
+          phone: values.phone,
+          service: values.service,
+          message: values.message,
+          botcheck: '',
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data.success) {
+        setSent(true)
+        setValues({ name: '', email: '', phone: '', service: '', message: '' })
+      } else {
+        setErrorMsg(`Something went wrong. Please email me directly at ${CONTACT_EMAIL}.`)
+      }
+    } catch {
+      setErrorMsg(`Something went wrong. Please email me directly at ${CONTACT_EMAIL}.`)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -114,10 +154,10 @@ export default function Contact() {
             <div className="mt-8 space-y-6 sm:mt-10">
               <DetailRow icon={MailIcon} label="Email">
                 <a
-                  href="mailto:arifmuneeb25@gmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="transition-colors duration-300 hover:text-gold min-h-[44px] flex items-center"
                 >
-                  arifmuneeb25@gmail.com
+                  {CONTACT_EMAIL}
                 </a>
               </DetailRow>
               <DetailRow icon={WhatsAppIcon} label="WhatsApp">
@@ -251,20 +291,39 @@ export default function Contact() {
                 )}
               </div>
 
+              {/* Honeypot: hidden from people, filled only by bots. Web3Forms filters on this name. */}
+              <input
+                ref={botRef}
+                type="checkbox"
+                name="botcheck"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
+
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="cta-btn w-full justify-center text-sm font-medium min-h-[48px]"
+                disabled={submitting}
+                className="cta-btn w-full justify-center text-sm font-medium min-h-[48px] disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send message
-                <ArrowRight className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
+                {submitting ? 'Sending' : 'Send message'}
+                {!submitting && <ArrowRight className="h-4 w-4" strokeWidth={2} aria-hidden="true" />}
               </button>
 
-              {sent && (
-                <p role="status" className="text-[14px] text-gold">
-                  Thanks, I will get back to you soon.
-                </p>
-              )}
+              <div aria-live="polite" aria-atomic="true">
+                {sent && (
+                  <p className="text-[14px] text-gold">
+                    Thanks, I will get back to you soon.
+                  </p>
+                )}
+                {errorMsg && (
+                  <p className="text-[14px] text-muted">
+                    {errorMsg}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>
