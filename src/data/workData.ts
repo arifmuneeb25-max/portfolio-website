@@ -293,11 +293,19 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
-    videoId: '8JDTQelI0m0',
-    title: 'Small Hands, Sorted',
-    note: 'Utopia Brands, Kids Hanger, Product Ad',
+    videoId: '2MDqA--HfGw',
+    title: 'Before the First Step',
+    note: 'Utopia Brands, Yolay Baby Walker, Product Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/8JDTQelI0m0/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/2MDqA--HfGw/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'Vy3EzZwrGD4',
+    title: 'Something in the Water',
+    note: 'Spec Ad, OpenArt Halloween Competition',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/Vy3EzZwrGD4/maxresdefault.jpg',
     category: 'commercial',
   },
 ]
@@ -363,6 +371,14 @@ export const videos = mainWorkVideos
  * decided. Nothing renders this list.
  */
 export const parkedVideos: VideoItem[] = [
+  {
+    videoId: '8JDTQelI0m0',
+    title: 'Small Hands, Sorted',
+    note: 'Utopia Brands, Kids Hanger, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/8JDTQelI0m0/maxresdefault.jpg',
+    category: 'commercial',
+  },
   {
     videoId: 'YFsVyNTbuU4',
     title: 'Every Kitchen Has One',
