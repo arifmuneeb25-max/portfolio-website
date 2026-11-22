@@ -84,15 +84,15 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '04',
-    title: 'A Carnival Film',
-    category: 'Personal concept film',
-    slug: 'carnival',
-    videoId: 'KLBiubarXFY',
+    title: 'An Outdoor Pillows Ad',
+    category: 'For Utopia Brands',
+    slug: 'outdoor-pillows',
+    videoId: '2c0kI6zEkhg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Carnival Film, personal concept film. Video thumbnail.',
+      alt: 'An AI UGC ad for Utopia Brands outdoor pillows. Video thumbnail.',
     },
   },
 ]
