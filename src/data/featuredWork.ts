@@ -58,15 +58,17 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '02',
-    title: 'A Beauty Film',
-    category: 'For TheSkinFit',
-    slug: 'aurelis',
-    videoId: 'hDJfkR8eR2s',
+    title: 'A Meta Ad',
+    category: 'For OpenArt AI',
+    slug: 'openart',
+    videoId: '52Dcns0JX9k',
+    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
+    thumbnail: '/thumbs/openart-meta-ad.jpg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Beauty Film for TheSkinFit. Video thumbnail.',
+      alt: 'A Meta Ad for OpenArt AI. Video thumbnail.',
     },
   },
   {
@@ -84,15 +86,18 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '04',
-    title: 'A Carnival Film',
-    category: 'Personal concept film',
-    slug: 'carnival',
-    videoId: 'KLBiubarXFY',
+    title: 'An Outdoor Pillows Ad',
+    category: 'For Utopia Brands',
+    slug: 'outdoor-pillows',
+    videoId: '2c0kI6zEkhg',
+    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
+    thumbnail: '/thumbs/outdoor-pillows.jpg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Carnival Film, personal concept film. Video thumbnail.',
+      alt: 'An AI UGC ad for Utopia Brands outdoor pillows. Video thumbnail.',
     },
   },
 ]
+

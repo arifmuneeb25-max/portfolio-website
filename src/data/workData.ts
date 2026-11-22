@@ -1,10 +1,33 @@
+/** Which Work section a video sits in. */
+export type VideoCategory = 'commercial' | 'story'
+
 export type VideoItem = {
   videoId: string
   title: string
   note: string
   ratio: string
   thumbnail?: string
+  /** 'commercial' for brand and spec ads, 'story' for short films and personal stories. */
+  category: VideoCategory
 }
+
+/**
+ * The two video sections on both Work pages, in display order. Each video's
+ * `category` decides which section it appears in; order inside a section
+ * follows the order of the list below.
+ */
+export const workSections: { key: VideoCategory; label: string; line: string }[] = [
+  {
+    key: 'commercial',
+    label: 'Commercials',
+    line: 'Brand films and ads, for clients and on spec.',
+  },
+  {
+    key: 'story',
+    label: 'Short Stories',
+    line: 'Stories I wrote and directed because I wanted to see them exist.',
+  },
+]
 
 export type GallerySlide = {
   type: 'image' | 'video'
@@ -166,11 +189,44 @@ export const sharedImages: ImageItem[] = [
  */
 export const mainWorkVideos: VideoItem[] = [
   {
-    videoId: 'YFsVyNTbuU4',
-    title: 'Every Kitchen Has One',
-    note: 'Utopia Brands, Dish Towel, Amazon Film',
+    videoId: 'V17p-69EF04',
+    title: 'Everything Waits for 11.11',
+    note: 'Daraz, 11.11 Sale, Spec Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/YFsVyNTbuU4/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/V17p-69EF04/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: '0emVRApaPLo',
+    title: 'What Your Pillow Has Seen',
+    note: 'Utopia Brands, Pillowcases, Amazon Sponsored Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/0emVRApaPLo/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: '_P1JNmNTNK0',
+    title: 'Winners Lose More',
+    note: 'Personal Concept, Short Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/_P1JNmNTNK0/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'KLBiubarXFY',
+    title: 'A Carnival Film',
+    note: 'Personal Concept, Short Film',
+    ratio: '9/16',
+    thumbnail: 'https://img.youtube.com/vi/KLBiubarXFY/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'hDJfkR8eR2s',
+    title: 'Her Routine, Restocked',
+    note: 'TheSkinFit, Platform Launch Ad',
+    ratio: '9/16',
+    thumbnail: '/thumbs/theskinfit.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'I_5153StFJY',
@@ -178,6 +234,15 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Personal Concept, UGC',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/I_5153StFJY/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'DEpcdM3Divc',
+    title: 'The Last Listing You Open',
+    note: 'Pakistan Properties, Brand Launch Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/DEpcdM3Divc/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'ZeVKkwKtJW4',
@@ -185,13 +250,23 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Personal Work, Short Film',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/ZeVKkwKtJW4/maxresdefault.jpg',
+    category: 'story',
   },
   {
-    videoId: 'vGgxMBdk0Dg',
-    title: 'A Reason to Fly Home',
-    note: 'Air Karachi, Spec Ad',
+    videoId: 'WFrwbl6JVcI',
+    title: 'Clocked In, Checked Out',
+    note: 'Personal Concept, Comedy Short',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
+    thumbnail: '/thumbs/clocked-in-checked-out.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'crj1sgEz2AI',
+    title: "The Lamborghini Doesn't Take It Personally",
+    note: 'Personal Concept, Short Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/crj1sgEz2AI/maxresdefault.jpg',
+    category: 'story',
   },
   {
     videoId: 'JRavp3hUfTM',
@@ -199,6 +274,7 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Deep Pocket Sheet, UGC',
     ratio: '9/16',
     thumbnail: '/assets/thumbnails/lumiere-thumb.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'LNqK4FWMOl4',
@@ -206,6 +282,7 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Rawan, Fashion Spec',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/LNqK4FWMOl4/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: '7dNexrTOCys',
@@ -213,6 +290,7 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Loop Coffee, Spec Ad',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/7dNexrTOCys/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'i7nwOhjaBIs',
@@ -220,6 +298,7 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Fleece Blanket, Product Ad',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/i7nwOhjaBIs/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: '76lDopB_nqE',
@@ -227,20 +306,31 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Personal Concept, UGC Spec',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/76lDopB_nqE/maxresdefault.jpg',
+    category: 'story',
   },
   {
-    videoId: 'Z-ySeKjqCN0',
-    title: 'Sink Right In',
-    note: 'Utopia Brands, Bolster Pillow, Product Ad',
+    videoId: 'vGgxMBdk0Dg',
+    title: 'A Reason to Fly Home',
+    note: 'Air Karachi, Spec Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/Z-ySeKjqCN0/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
-    videoId: '8JDTQelI0m0',
-    title: 'Small Hands, Sorted',
-    note: 'Utopia Brands, Kids Hanger, Product Ad',
+    videoId: '2MDqA--HfGw',
+    title: 'Before the First Step',
+    note: 'Utopia Brands, Yolay Baby Walker, Product Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/8JDTQelI0m0/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/2MDqA--HfGw/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'Vy3EzZwrGD4',
+    title: 'Something in the Water',
+    note: 'Spec Ad, OpenArt Halloween Competition',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/Vy3EzZwrGD4/maxresdefault.jpg',
+    category: 'commercial',
   },
 ]
 
@@ -254,6 +344,7 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Poly Fill Stuffing, Product Ad',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/wYXxiaZo7a4/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'b4bAVeL8wm8',
@@ -261,6 +352,7 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Kitchen Bar Mops, UGC',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/b4bAVeL8wm8/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'bfF8fyJ__XY',
@@ -268,6 +360,7 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Sherpa Blanket, UGC',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/bfF8fyJ__XY/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: '3GHx-cw7EOY',
@@ -275,6 +368,7 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Personal Concept, 3D Animation',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/3GHx-cw7EOY/maxresdefault.jpg',
+    category: 'story',
   },
   {
     videoId: 'Oy5xxVmnCDA',
@@ -282,6 +376,7 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Spec Concept, Paper Stop Motion',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/Oy5xxVmnCDA/maxresdefault.jpg',
+    category: 'story',
   },
   {
     videoId: 'Mhh63ur6xL8',
@@ -289,7 +384,39 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Utopia Brands, Athletic Shorts, Fashion UGC',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/Mhh63ur6xL8/maxresdefault.jpg',
+    category: 'commercial',
   },
 ]
 
 export const videos = mainWorkVideos
+
+/**
+ * Parked: taken off the Work pages but kept here until their new spot is
+ * decided. Nothing renders this list.
+ */
+export const parkedVideos: VideoItem[] = [
+  {
+    videoId: '8JDTQelI0m0',
+    title: 'Small Hands, Sorted',
+    note: 'Utopia Brands, Kids Hanger, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/8JDTQelI0m0/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'YFsVyNTbuU4',
+    title: 'Every Kitchen Has One',
+    note: 'Utopia Brands, Dish Towel, Amazon Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/YFsVyNTbuU4/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'Z-ySeKjqCN0',
+    title: 'Sink Right In',
+    note: 'Utopia Brands, Bolster Pillow, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/Z-ySeKjqCN0/maxresdefault.jpg',
+    category: 'commercial',
+  },
+]
