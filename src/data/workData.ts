@@ -205,6 +205,14 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
+    videoId: '_P1JNmNTNK0',
+    title: 'Winners Lose More',
+    note: 'Personal Concept, Short Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/_P1JNmNTNK0/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
     videoId: 'KLBiubarXFY',
     title: 'A Carnival Film',
     note: 'Personal Concept, Short Film',
@@ -242,6 +250,22 @@ export const mainWorkVideos: VideoItem[] = [
     note: 'Personal Work, Short Film',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/ZeVKkwKtJW4/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'WFrwbl6JVcI',
+    title: 'Clocked In, Checked Out',
+    note: 'Personal Concept, Comedy Short',
+    ratio: '16/9',
+    thumbnail: '/thumbs/clocked-in-checked-out.jpg',
+    category: 'story',
+  },
+  {
+    videoId: 'crj1sgEz2AI',
+    title: "The Lamborghini Doesn't Take It Personally",
+    note: 'Personal Concept, Short Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/crj1sgEz2AI/maxresdefault.jpg',
     category: 'story',
   },
   {
