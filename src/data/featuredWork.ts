@@ -101,22 +101,3 @@ export const featuredWork: FeaturedProject[] = [
   },
 ]
 
-/**
- * Parked: taken off Home but kept here until its new spot is decided.
- * Nothing renders this list.
- */
-export const parkedWork: FeaturedProject[] = [
-  {
-    index: '02',
-    title: 'A Beauty Film',
-    category: 'For TheSkinFit',
-    slug: 'aurelis',
-    videoId: 'hDJfkR8eR2s',
-    media: {
-      type: 'video',
-      src: null,
-      poster: null,
-      alt: 'A Beauty Film for TheSkinFit. Video thumbnail.',
-    },
-  },
-]

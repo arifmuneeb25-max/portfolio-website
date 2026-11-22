@@ -189,11 +189,11 @@ export const sharedImages: ImageItem[] = [
  */
 export const mainWorkVideos: VideoItem[] = [
   {
-    videoId: 'YFsVyNTbuU4',
-    title: 'Every Kitchen Has One',
-    note: 'Utopia Brands, Dish Towel, Amazon Film',
+    videoId: '0emVRApaPLo',
+    title: 'What Your Pillow Has Seen',
+    note: 'Utopia Brands, Pillowcases, Amazon Sponsored Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/YFsVyNTbuU4/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/0emVRApaPLo/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -205,12 +205,28 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'story',
   },
   {
+    videoId: 'hDJfkR8eR2s',
+    title: 'Her Routine, Restocked',
+    note: 'TheSkinFit, Platform Launch Ad',
+    ratio: '9/16',
+    thumbnail: '/thumbs/theskinfit.jpg',
+    category: 'commercial',
+  },
+  {
     videoId: 'I_5153StFJY',
     title: 'I Asked ChatGPT About You',
     note: 'Personal Concept, UGC',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/I_5153StFJY/maxresdefault.jpg',
     category: 'story',
+  },
+  {
+    videoId: 'DEpcdM3Divc',
+    title: 'The Last Listing You Open',
+    note: 'Pakistan Properties, Brand Launch Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/DEpcdM3Divc/maxresdefault.jpg',
+    category: 'commercial',
   },
   {
     videoId: 'ZeVKkwKtJW4',
@@ -221,11 +237,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'story',
   },
   {
-    videoId: 'vGgxMBdk0Dg',
-    title: 'A Reason to Fly Home',
-    note: 'Air Karachi, Spec Ad',
+    videoId: 'V17p-69EF04',
+    title: 'Everything Waits for 11.11',
+    note: 'Daraz, 11.11 Sale, Spec Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/V17p-69EF04/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -269,11 +285,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'story',
   },
   {
-    videoId: 'Z-ySeKjqCN0',
-    title: 'Sink Right In',
-    note: 'Utopia Brands, Bolster Pillow, Product Ad',
+    videoId: 'vGgxMBdk0Dg',
+    title: 'A Reason to Fly Home',
+    note: 'Air Karachi, Spec Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/Z-ySeKjqCN0/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -341,3 +357,26 @@ export const secondWorkVideos: VideoItem[] = [
 ]
 
 export const videos = mainWorkVideos
+
+/**
+ * Parked: taken off the Work pages but kept here until their new spot is
+ * decided. Nothing renders this list.
+ */
+export const parkedVideos: VideoItem[] = [
+  {
+    videoId: 'YFsVyNTbuU4',
+    title: 'Every Kitchen Has One',
+    note: 'Utopia Brands, Dish Towel, Amazon Film',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/YFsVyNTbuU4/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'Z-ySeKjqCN0',
+    title: 'Sink Right In',
+    note: 'Utopia Brands, Bolster Pillow, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/Z-ySeKjqCN0/maxresdefault.jpg',
+    category: 'commercial',
+  },
+]
