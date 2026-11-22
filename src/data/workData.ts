@@ -189,6 +189,14 @@ export const sharedImages: ImageItem[] = [
  */
 export const mainWorkVideos: VideoItem[] = [
   {
+    videoId: 'V17p-69EF04',
+    title: 'Everything Waits for 11.11',
+    note: 'Daraz, 11.11 Sale, Spec Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/V17p-69EF04/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
     videoId: '0emVRApaPLo',
     title: 'What Your Pillow Has Seen',
     note: 'Utopia Brands, Pillowcases, Amazon Sponsored Ad',
@@ -235,14 +243,6 @@ export const mainWorkVideos: VideoItem[] = [
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/ZeVKkwKtJW4/maxresdefault.jpg',
     category: 'story',
-  },
-  {
-    videoId: 'V17p-69EF04',
-    title: 'Everything Waits for 11.11',
-    note: 'Daraz, 11.11 Sale, Spec Ad',
-    ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/V17p-69EF04/maxresdefault.jpg',
-    category: 'commercial',
   },
   {
     videoId: 'JRavp3hUfTM',
