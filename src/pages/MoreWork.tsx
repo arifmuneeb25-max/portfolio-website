@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
+import WorkVideoGrid from '../components/WorkVideoGrid'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
 import { sharedImages, secondWorkVideos, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
@@ -231,8 +232,8 @@ export default function MoreWork() {
           ))}
         </div>
 
-        {/* Video view: two sections, Commercials then Short Stories, each its own
-            masonry grid (3 at 1024px+, 2 at 640px+, 1 below). Images view: one grid. */}
+        {/* Video view: two sections, Commercials then Short Stories, each laid out
+            by WorkVideoGrid in list order. Images view: one masonry grid. */}
         <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
           {view === 'video' ? (
             workSections.map((section, si) => {
@@ -258,11 +259,12 @@ export default function MoreWork() {
                     </div>
                     <p className="mt-2 text-[15px] text-body sm:text-base">{section.line}</p>
                   </div>
-                  <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-                    {list.map((item, i) => (
-                      <Tile key={`${item.title}-${i}`} item={item} type="video" index={i} onOpen={setLightbox} />
-                    ))}
-                  </div>
+                  <WorkVideoGrid
+                    items={list}
+                    renderTile={(item, i) => (
+                      <Tile item={item} type="video" index={i} onOpen={setLightbox} />
+                    )}
+                  />
                 </section>
               )
             })
