@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
@@ -194,8 +194,18 @@ export default function MoreWork() {
     return () => io.disconnect()
   }, [view])
 
-  const closeLightbox = useCallback(() => setLightbox(null), [])
+  // Arriving from a section's "See more" link (/work/more#commercials or
+  // #short-stories): jump straight to that section, below the sticky nav.
+  const { hash } = useLocation()
+  useEffect(() => {
+    if (!hash) return
+    const el = document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (!el) return
+    const id = requestAnimationFrame(() => el.scrollIntoView({ block: 'start' }))
+    return () => cancelAnimationFrame(id)
+  }, [hash])
 
+  const closeLightbox = useCallback(() => setLightbox(null), [])
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-surface text-heading">
@@ -242,8 +252,9 @@ export default function MoreWork() {
               return (
                 <section
                   key={section.key}
+                  id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}
+                  className={`scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
                 >
                   <div className="mb-8 sm:mb-10">
                     <div className="flex items-baseline justify-between gap-4">
