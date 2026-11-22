@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
-import { mainWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
+import { mainWorkVideos, secondWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
 const images: ImageItem[] = sharedImages
 
@@ -235,8 +235,9 @@ export default function Work() {
               return (
                 <section
                   key={section.key}
+                  id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}
+                  className={`scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
                 >
                   <div className="mb-8 sm:mb-10">
                     <div className="flex items-baseline justify-between gap-4">
@@ -258,6 +259,24 @@ export default function Work() {
                       <Tile item={item} type="video" index={i} onOpen={setLightbox} />
                     )}
                   />
+
+                  {/* See more: opens /work/more straight at this same section. */}
+                  {secondWorkVideos.some((v) => v.category === section.key) && (
+                    <div className="mt-4 flex justify-center">
+                      <Link
+                        to={`/work/more#${section.slug}`}
+                        className="group inline-flex min-h-[44px] items-center gap-2 text-[15px] tracking-[0.04em] text-cream transition-colors duration-300 hover:text-gold"
+                      >
+                        See more {section.label.toLowerCase()}
+                        <span
+                          aria-hidden="true"
+                          className="text-gold transition-transform duration-[250ms] ease-out group-hover:translate-x-1.5"
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </div>
+                  )}
                 </section>
               )
             })
@@ -270,23 +289,6 @@ export default function Work() {
           )}
         </div>
 
-        {/* See more work link — video view only */}
-        {view === 'video' && (
-          <div className="mt-16 flex justify-center">
-            <Link
-              to="/work/more"
-              className="group inline-flex min-h-[44px] items-center gap-2 text-[15px] tracking-[0.04em] text-cream transition-colors duration-300 hover:text-gold"
-            >
-              See more work
-              <span
-                aria-hidden="true"
-                className="text-gold transition-transform duration-[250ms] ease-out group-hover:translate-x-1.5"
-              >
-                →
-              </span>
-            </Link>
-          </div>
-        )}
       </div>
 
       <Footer />

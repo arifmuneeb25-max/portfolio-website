@@ -16,14 +16,16 @@ export type VideoItem = {
  * `category` decides which section it appears in; order inside a section
  * follows the order of the list below.
  */
-export const workSections: { key: VideoCategory; label: string; line: string }[] = [
+export const workSections: { key: VideoCategory; slug: string; label: string; line: string }[] = [
   {
     key: 'commercial',
+    slug: 'commercials',
     label: 'Commercials',
     line: 'Brand films and ads, for clients and on spec.',
   },
   {
     key: 'story',
+    slug: 'short-stories',
     label: 'Short Stories',
     line: 'Stories I wrote and directed because I wanted to see them exist.',
   },

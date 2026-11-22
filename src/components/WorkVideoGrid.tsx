@@ -8,13 +8,14 @@ function isVertical(v: VideoItem) {
 }
 
 /**
- * Layout for one Work section, filled in list order (left to right). Every
- * box of the same format is the same size, in every section and on both
- * Work pages:
+ * Layout for one Work section, filled in list order (left to right). Apart
+ * from the lead, every box of the same format is the same size, in every
+ * section and on both Work pages:
  *
- * 1. Horizontal grid: every 16:9 film, 2 across at 640px+, 1 across below.
- *    With an odd count the last film keeps the same size and is centred.
- * 2. Vertical row: every 9:16 film, 3 across at 640px+. Below 640px it is a
+ * 1. Lead: the first 16:9 film, full width.
+ * 2. Horizontal grid: the other 16:9 films, 2 across at 640px+, 1 across
+ *    below. With an odd count the last film keeps the same size and is centred.
+ * 3. Vertical row: every 9:16 film, 3 across at 640px+. Below 640px it is a
  *    swipeable row (the next tile peeks in), so there is never a lone tile on
  *    a phone. A short last row is centred at the same size.
  *
@@ -32,17 +33,20 @@ export default function WorkVideoGrid({
 }) {
   const wide = items.filter((v) => !isVertical(v))
   const tall = items.filter(isVertical)
+  const [lead, ...rest] = wide
   let n = 0
 
   return (
     <div>
-      {wide.length > 0 && (
+      {lead && <div>{renderTile(lead, n++)}</div>}
+
+      {rest.length > 0 && (
         <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 sm:gap-x-6">
-          {wide.map((v, k) => (
+          {rest.map((v, k) => (
             <div
               key={v.videoId}
               className={
-                wide.length % 2 === 1 && k === wide.length - 1
+                rest.length % 2 === 1 && k === rest.length - 1
                   ? 'sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.75rem)]'
                   : ''
               }
