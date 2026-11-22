@@ -58,15 +58,15 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '02',
-    title: 'A Beauty Film',
-    category: 'For TheSkinFit',
-    slug: 'aurelis',
-    videoId: 'hDJfkR8eR2s',
+    title: 'A Meta Ad',
+    category: 'For OpenArt AI',
+    slug: 'openart',
+    videoId: '52Dcns0JX9k',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Beauty Film for TheSkinFit. Video thumbnail.',
+      alt: 'A Meta Ad for OpenArt AI. Video thumbnail.',
     },
   },
   {
@@ -93,6 +93,26 @@ export const featuredWork: FeaturedProject[] = [
       src: null,
       poster: null,
       alt: 'A Carnival Film, personal concept film. Video thumbnail.',
+    },
+  },
+]
+
+/**
+ * Parked: taken off Home but kept here until its new spot is decided.
+ * Nothing renders this list.
+ */
+export const parkedWork: FeaturedProject[] = [
+  {
+    index: '02',
+    title: 'A Beauty Film',
+    category: 'For TheSkinFit',
+    slug: 'aurelis',
+    videoId: 'hDJfkR8eR2s',
+    media: {
+      type: 'video',
+      src: null,
+      poster: null,
+      alt: 'A Beauty Film for TheSkinFit. Video thumbnail.',
     },
   },
 ]

@@ -197,6 +197,14 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
+    videoId: 'KLBiubarXFY',
+    title: 'A Carnival Film',
+    note: 'Personal Concept, Short Film',
+    ratio: '9/16',
+    thumbnail: 'https://img.youtube.com/vi/KLBiubarXFY/maxresdefault.jpg',
+    category: 'story',
+  },
+  {
     videoId: 'I_5153StFJY',
     title: 'I Asked ChatGPT About You',
     note: 'Personal Concept, UGC',
