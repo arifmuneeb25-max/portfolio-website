@@ -62,6 +62,8 @@ export const featuredWork: FeaturedProject[] = [
     category: 'For OpenArt AI',
     slug: 'openart',
     videoId: '52Dcns0JX9k',
+    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
+    thumbnail: '/thumbs/openart-meta-ad.jpg',
     media: {
       type: 'video',
       src: null,
@@ -88,6 +90,8 @@ export const featuredWork: FeaturedProject[] = [
     category: 'For Utopia Brands',
     slug: 'outdoor-pillows',
     videoId: '2c0kI6zEkhg',
+    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
+    thumbnail: '/thumbs/outdoor-pillows.jpg',
     media: {
       type: 'video',
       src: null,
