@@ -2,7 +2,9 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
-import { sharedImages, secondWorkVideos, type VideoItem, type ImageItem } from '../data/workData'
+import { sharedImages, secondWorkVideos, workSections, type VideoItem, type ImageItem } from '../data/workData'
+
+const images: ImageItem[] = sharedImages
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
@@ -193,7 +195,6 @@ export default function MoreWork() {
 
   const closeLightbox = useCallback(() => setLightbox(null), [])
 
-  const items: (VideoItem | ImageItem)[] = view === 'video' ? secondWorkVideos : sharedImages
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-surface text-heading">
@@ -230,15 +231,48 @@ export default function MoreWork() {
           ))}
         </div>
 
-        {/* Masonry grid */}
-        <div
-          key={view}
-          ref={gridRef}
-          className="mt-8 columns-1 gap-4 sm:mt-10 sm:columns-2 lg:columns-3"
-        >
-          {items.map((item, i) => (
-            <Tile key={`${item.title}-${i}`} item={item} type={view} index={i} onOpen={setLightbox} />
-          ))}
+        {/* Video view: two sections, Commercials then Short Stories, each its own
+            masonry grid (3 at 1024px+, 2 at 640px+, 1 below). Images view: one grid. */}
+        <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
+          {view === 'video' ? (
+            workSections.map((section, si) => {
+              const list = secondWorkVideos.filter((v) => v.category === section.key)
+              if (list.length === 0) return null
+              return (
+                <section
+                  key={section.key}
+                  aria-labelledby={`work-${section.key}`}
+                  className={si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}
+                >
+                  <div className="mb-8 sm:mb-10">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h2
+                        id={`work-${section.key}`}
+                        className="text-[26px] leading-tight text-heading sm:text-[34px]"
+                      >
+                        {section.label}
+                      </h2>
+                      <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
+                        {String(list.length).padStart(2, '0')} {list.length === 1 ? 'film' : 'films'}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[15px] text-body sm:text-base">{section.line}</p>
+                  </div>
+                  <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+                    {list.map((item, i) => (
+                      <Tile key={`${item.title}-${i}`} item={item} type="video" index={i} onOpen={setLightbox} />
+                    ))}
+                  </div>
+                </section>
+              )
+            })
+          ) : (
+            <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+              {images.map((item, i) => (
+                <Tile key={`${item.title}-${i}`} item={item} type="image" index={i} onOpen={setLightbox} />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Back to main work link — single link at bottom for video view */}
