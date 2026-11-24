@@ -1,39 +1,30 @@
-import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
 import { mainNav } from '../data/nav'
 
 const HAIRLINE = '0.5px solid var(--hairline-strong)'
 
 /**
  * Shared, persistent top navigation. Rendered once (above the router) so it
- * stays mounted across pages and sticks to the top on scroll. Wordmark left,
- * links right; current page's link is highlighted gold. Collapses to a
- * hamburger + full-screen overlay below the md breakpoint.
+ * stays mounted across pages and sticks to the top on scroll. Wordmark left;
+ * the current page is highlighted gold.
+ *
+ * md and up: text links on the right of the wordmark row.
+ * Below md: a second row of button tabs under the wordmark, so every page is
+ * visible the moment the site opens (no hidden menu). Each tab has a 44px
+ * tall hit area around a 32px pill. Total height on phones is 116px; keep
+ * Hero's mobile height and the Work sections' scroll margin in step with it.
  */
 export default function Nav() {
-  const [open, setOpen] = useState(false)
-  const { pathname } = useLocation()
-
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => setOpen(false), [pathname])
-
-  // Lock body scroll while the overlay is open.
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [open])
-
   const desktopLink = ({ isActive }: { isActive: boolean }) =>
     `text-xs uppercase tracking-[0.18em] transition-colors duration-300 ${
       isActive ? 'text-gold' : 'text-muted hover:text-gold'
     }`
 
-  const mobileLink = ({ isActive }: { isActive: boolean }) =>
-    `text-lg uppercase tracking-[0.18em] transition-colors duration-300 min-h-[44px] flex items-center ${
-      isActive ? 'text-gold font-medium' : 'text-muted hover:text-gold'
+  const tabPill = (isActive: boolean) =>
+    `flex h-8 items-center rounded-full px-[9px] text-[10px] uppercase tracking-[0.1em] transition-colors duration-300 max-[370px]:px-1.5 max-[370px]:text-[9px] max-[370px]:tracking-[0.06em] ${
+      isActive
+        ? 'bg-gold font-bold text-surface'
+        : 'border border-white/15 text-heading active:border-gold/60'
     }`
 
   return (
@@ -63,62 +54,28 @@ export default function Nav() {
             ))}
           </ul>
         </nav>
-
-        {/* Mobile hamburger button — 44px x 44px min hit area. */}
-        <button
-          type="button"
-          className="flex h-11 w-11 items-center justify-center rounded text-heading md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-          aria-label="Open menu"
-          aria-expanded={open}
-          onClick={() => setOpen(true)}
-        >
-          <Menu className="h-6 w-6" aria-hidden="true" />
-        </button>
       </div>
 
-      {/* Mobile overlay. */}
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col bg-surface pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] md:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menu"
-        >
-          <div
-            className="site-container flex h-16 items-center justify-between"
-            style={{ borderBottom: HAIRLINE }}
-          >
-            <span className="text-[14px] font-medium tracking-[0.28em] text-heading">
-              MUNEEB ARIF
-            </span>
-            <button
-              type="button"
-              className="flex h-11 w-11 items-center justify-center rounded text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-              aria-label="Close menu"
-              onClick={() => setOpen(false)}
-            >
-              <X className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-
-          <nav aria-label="Mobile" className="site-container py-10 flex-1 overflow-y-auto">
-            <ul className="flex flex-col gap-4">
-              {mainNav.map((item) => (
-                <li key={item.href}>
-                  <NavLink
-                    to={item.href}
-                    end={item.href === '/'}
-                    className={mobileLink}
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
+      {/* Mobile button tabs — always visible below md. */}
+      <nav
+        aria-label="Primary"
+        className="site-container flex h-[52px] items-center md:hidden"
+        style={{ borderTop: HAIRLINE }}
+      >
+        <ul className="flex w-full items-center justify-between gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {mainNav.map((item) => (
+            <li key={item.href} className="shrink-0">
+              <NavLink
+                to={item.href}
+                end={item.href === '/'}
+                className="flex h-11 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full"
+              >
+                {({ isActive }) => <span className={tabPill(isActive)}>{item.label}</span>}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   )
 }
