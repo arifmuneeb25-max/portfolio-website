@@ -161,7 +161,7 @@ const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /** Home's four Selected Work films, shaped as Work tiles (first is 16:9, the rest 9:16). */
-const featuredVideos: VideoItem[] = featuredWork.map((p, i) => ({
+const homeVideos: VideoItem[] = featuredWork.map((p, i) => ({
   videoId: p.videoId,
   title: p.title,
   note: p.category.replace(/^For (an? )?/, ''),
@@ -171,7 +171,7 @@ const featuredVideos: VideoItem[] = featuredWork.map((p, i) => ({
 }))
 
 /** True unless this visitor already saw Home's Selected Work during this visit. */
-function shouldShowFeatured() {
+function shouldShowHomeVideos() {
   try {
     return sessionStorage.getItem(SEEN_HOME_FEATURED) !== '1'
   } catch {
@@ -179,9 +179,20 @@ function shouldShowFeatured() {
   }
 }
 
+/**
+ * Commercials list, plus Home's four as ordinary tiles for visitors who have
+ * not seen them on Home: the 16:9 film goes second (beside the first
+ * commercial), the 9:16 reels join the end of the reel row. No label, no
+ * separate section, so nothing reads as more important than the rest.
+ */
+function withHomeVideos(list: VideoItem[]) {
+  const [wide, ...reels] = homeVideos
+  return [...list.slice(0, 1), wide, ...list.slice(1), ...reels]
+}
+
 export default function Work() {
   const [view, setView] = useState<View>('video')
-  const [showFeatured] = useState(shouldShowFeatured)
+  const [showHomeVideos] = useState(shouldShowHomeVideos)
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -250,37 +261,16 @@ export default function Work() {
             by WorkVideoGrid in list order. Images view: one masonry grid. */}
         <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
           {view === 'video' ? (
-            <>
-            {/* Featured: Home's four films, shown only to visitors who did not
-                see them on Home this visit (e.g. someone sent the Work link). */}
-            {showFeatured && (
-              <section id="featured" aria-labelledby="work-featured" className="scroll-mt-36 md:scroll-mt-24">
-                <div className="mb-8 sm:mb-10">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h2 id="work-featured" className="text-[26px] leading-tight text-heading sm:text-[34px]">
-                      Featured
-                    </h2>
-                    <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
-                      {String(featuredVideos.length).padStart(2, '0')} films
-                    </span>
-                  </div>
-                  <p className="mt-2 text-[15px] text-body sm:text-base">If you only watch four, watch these.</p>
-                </div>
-                <WorkVideoGrid
-                  items={featuredVideos}
-                  renderTile={(item, i) => <Tile item={item} type="video" index={i} onOpen={setLightbox} />}
-                />
-              </section>
-            )}
-            {workSections.map((section, si) => {
-              const list = mainWorkVideos.filter((v) => v.category === section.key)
+            workSections.map((section, si) => {
+              const base = mainWorkVideos.filter((v) => v.category === section.key)
+              const list = section.key === 'commercial' && showHomeVideos ? withHomeVideos(base) : base
               if (list.length === 0) return null
               return (
                 <section
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 || showFeatured ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
+                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
                 >
                   <div className="mb-8 sm:mb-10">
                     <div className="flex items-baseline justify-between gap-4">
@@ -322,8 +312,7 @@ export default function Work() {
                   )}
                 </section>
               )
-            })}
-            </>
+            })
           ) : (
             <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
               {images.map((item, i) => (
