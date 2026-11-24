@@ -72,15 +72,17 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '03',
-    title: 'A Brand Film',
-    category: 'For Motoreasy',
-    slug: 'nocturne',
-    videoId: 'BfaJzmyYOHw',
+    title: 'A Launch Hype Reel',
+    category: 'For a UK Brand Website',
+    slug: 'uk-launch-hype',
+    videoId: 'xJFqm9V3RcY',
+    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
+    thumbnail: '/thumbs/uk-launch-hype.jpg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Brand Film for Motoreasy. Video thumbnail.',
+      alt: 'A launch hype reel for a UK brand website. Video thumbnail.',
     },
   },
   {
