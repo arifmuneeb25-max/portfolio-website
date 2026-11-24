@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { Link, useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
+import WorkSectionHeader from '../components/WorkSectionHeader'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
 import { sharedImages, secondWorkVideos, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
@@ -254,22 +255,16 @@ export default function MoreWork() {
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
+                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-7 sm:mt-12' : ''}`}
                 >
-                  <div className="mb-8 sm:mb-10">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h2
-                        id={`work-${section.key}`}
-                        className="text-[26px] leading-tight text-heading sm:text-[34px]"
-                      >
-                        {section.label}
-                      </h2>
-                      <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
-                        {String(list.length).padStart(2, '0')} {list.length === 1 ? 'film' : 'films'}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-[15px] text-body sm:text-base">{section.line}</p>
-                  </div>
+                  <WorkSectionHeader
+                    id={section.key}
+                    slug={section.slug}
+                    label={section.label}
+                    line={section.line}
+                    count={list.length}
+                    upNext={si > 0}
+                  />
                   <WorkVideoGrid
                     items={list}
                     renderTile={(item, i) => (
