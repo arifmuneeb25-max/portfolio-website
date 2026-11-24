@@ -315,7 +315,7 @@ export const mainWorkVideos: VideoItem[] = [
     title: 'Pizza in Bed, No Regrets',
     note: 'Utopia Brands, Mattress Protector, Amazon Listing Film',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/8bfadufmMYo/maxresdefault.jpg',
+    thumbnail: '/thumbs/utopia-mattress-protector.jpg',
     category: 'commercial',
   },
   {
