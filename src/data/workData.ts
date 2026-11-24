@@ -223,11 +223,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
-    videoId: '0emVRApaPLo',
-    title: 'What Your Pillow Has Seen',
-    note: 'Utopia Brands, Pillowcases, Amazon Sponsored Ad',
+    videoId: '0RMtduDUdOE',
+    title: 'Where the Long Day Ends',
+    note: 'Utopia Brands, Quilted Mattress, Amazon Sponsored Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/0emVRApaPLo/maxresdefault.jpg',
+    thumbnail: '/thumbs/utopia-quilted-mattress.jpg',
     category: 'commercial',
   },
   {
@@ -311,11 +311,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'story',
   },
   {
-    videoId: 'LrDN9PQKIEk',
-    title: 'She Was There for All of It',
-    note: "Utopia Brands, Mother's Day Film",
+    videoId: '0emVRApaPLo',
+    title: 'What Your Pillow Has Seen',
+    note: 'Utopia Brands, Pillowcases, Amazon Sponsored Ad',
     ratio: '16/9',
-    thumbnail: '/thumbs/mothers-day-film.jpg',
+    thumbnail: 'https://img.youtube.com/vi/0emVRApaPLo/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -410,6 +410,14 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Spec Ad, OpenArt Halloween Competition',
     ratio: '16/9',
     thumbnail: 'https://img.youtube.com/vi/Vy3EzZwrGD4/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'LrDN9PQKIEk',
+    title: 'She Was There for All of It',
+    note: "Utopia Brands, Mother's Day Film",
+    ratio: '16/9',
+    thumbnail: '/thumbs/mothers-day-film.jpg',
     category: 'commercial',
   },
 ]
