@@ -279,11 +279,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
-    videoId: 'LNqK4FWMOl4',
-    title: 'Threads Worth Wearing',
-    note: 'Rawan, Fashion Spec',
+    videoId: 'LrDN9PQKIEk',
+    title: 'She Was There for All of It',
+    note: "Utopia Brands, Mother's Day Film",
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/LNqK4FWMOl4/maxresdefault.jpg',
+    thumbnail: '/thumbs/mothers-day-film.jpg',
     category: 'commercial',
   },
   {
@@ -397,6 +397,14 @@ export const videos = mainWorkVideos
  * decided. Nothing renders this list.
  */
 export const parkedVideos: VideoItem[] = [
+  {
+    videoId: 'LNqK4FWMOl4',
+    title: 'Threads Worth Wearing',
+    note: 'Rawan, Fashion Spec',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/LNqK4FWMOl4/maxresdefault.jpg',
+    category: 'commercial',
+  },
   {
     videoId: '8JDTQelI0m0',
     title: 'Small Hands, Sorted',

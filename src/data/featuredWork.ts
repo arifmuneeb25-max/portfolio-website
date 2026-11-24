@@ -42,18 +42,15 @@ export type FeaturedProject = {
 export const featuredWork: FeaturedProject[] = [
   {
     index: '01',
-    title: "A Mother's Day Film",
-    category: 'For Utopia Brands',
-    slug: 'maison-silene',
-    videoId: 'LrDN9PQKIEk',
-    // High resolution still exported from the master file (1924x1076). YouTube
-    // only serves 1280x720, which upscales on a full width hero.
-    thumbnail: '/thumbs/mothers-day-film.jpg',
+    title: 'Answer the Door in It',
+    category: 'For New York Threads',
+    slug: 'new-york-threads-bathrobe',
+    videoId: 'TnX0blvHQgM',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: "A Mother's Day Film for Utopia Brands. Video thumbnail.",
+      alt: 'Answer the Door in It, a bathrobe product film for New York Threads. Video thumbnail.',
     },
   },
   {
