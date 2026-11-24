@@ -105,7 +105,7 @@ function WorkTile({
 /**
  * BEAT 3 — Selected Work.
  * 16:9 hero tile goes full width.
- * Three 9:16 tiles go 3 across at 768px+, stack to 1 column full width below 768px.
+ * Three 9:16 tiles go 3 across at 768px+, and a swipeable row below 768px.
  */
 export default function FeaturedWork() {
   const [hero, ...rest] = featuredWork
@@ -126,16 +126,18 @@ export default function FeaturedWork() {
             <WorkTile project={hero} ratio="16/9" hero delay={0} onOpen={setLightbox} />
           )}
 
-          {/* Row 2 — three equal 9:16 tiles: 3 across at 768px+, 1 column full width below 768px. */}
-          <div className="mt-4 sm:mt-6 grid grid-cols-1 items-start gap-4 md:grid-cols-3 md:gap-6">
+          {/* Row 2 — three equal 9:16 tiles. 768px+: 3 across. Below 768px: a
+              swipeable row that runs off the right edge so the next reel peeks in. */}
+          <div className="-mr-5 mt-4 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pr-5 [scrollbar-width:none] sm:-mr-6 sm:mt-6 sm:pr-6 md:mr-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pr-0 [&::-webkit-scrollbar]:hidden">
             {rest.map((project, i) => (
-              <WorkTile
-                key={project.slug}
-                project={project}
-                ratio="9/16"
-                delay={0.08 * (i + 1)}
-                onOpen={setLightbox}
-              />
+              <div key={project.slug} className="w-[62%] shrink-0 snap-start sm:w-[42%] md:w-auto">
+                <WorkTile
+                  project={project}
+                  ratio="9/16"
+                  delay={0.08 * (i + 1)}
+                  onOpen={setLightbox}
+                />
+              </div>
             ))}
           </div>
         </div>
