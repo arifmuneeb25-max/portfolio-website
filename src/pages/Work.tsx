@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
+import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
 import { mainWorkVideos, secondWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
 const images: ImageItem[] = sharedImages
@@ -159,8 +160,39 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** Home's four Selected Work films, shaped as Work tiles (first is 16:9, the rest 9:16). */
+const homeVideos: VideoItem[] = featuredWork.map((p, i) => ({
+  videoId: p.videoId,
+  title: p.title,
+  note: p.category.replace(/^For (an? )?/, ''),
+  ratio: i === 0 ? '16/9' : '9/16',
+  thumbnail: p.thumbnail,
+  category: 'commercial',
+}))
+
+/** True unless this visitor already saw Home's Selected Work during this visit. */
+function shouldShowHomeVideos() {
+  try {
+    return sessionStorage.getItem(SEEN_HOME_FEATURED) !== '1'
+  } catch {
+    return true
+  }
+}
+
+/**
+ * Commercials list, plus Home's four as ordinary tiles for visitors who have
+ * not seen them on Home: the 16:9 film goes second (beside the first
+ * commercial), the 9:16 reels take the first reel row. No label, no
+ * separate section, so nothing reads as more important than the rest.
+ */
+function withHomeVideos(list: VideoItem[]) {
+  const [wide, ...reels] = homeVideos
+  return [...list.slice(0, 1), wide, ...reels, ...list.slice(1)]
+}
+
 export default function Work() {
   const [view, setView] = useState<View>('video')
+  const [showHomeVideos] = useState(shouldShowHomeVideos)
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -230,7 +262,8 @@ export default function Work() {
         <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
           {view === 'video' ? (
             workSections.map((section, si) => {
-              const list = mainWorkVideos.filter((v) => v.category === section.key)
+              const base = mainWorkVideos.filter((v) => v.category === section.key)
+              const list = section.key === 'commercial' && showHomeVideos ? withHomeVideos(base) : base
               if (list.length === 0) return null
               return (
                 <section

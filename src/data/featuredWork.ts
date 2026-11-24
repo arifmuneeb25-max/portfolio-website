@@ -102,3 +102,8 @@ export const featuredWork: FeaturedProject[] = [
   },
 ]
 
+/**
+ * Session flag set once a visitor has seen Home's Selected Work. The Work page
+ * reads it to skip its Featured row, so the same four films never repeat.
+ */
+export const SEEN_HOME_FEATURED = 'seen-home-featured'
