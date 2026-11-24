@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
+import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
 import { mainWorkVideos, secondWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
 const images: ImageItem[] = sharedImages
@@ -159,8 +160,28 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** Home's four Selected Work films, shaped as Work tiles (first is 16:9, the rest 9:16). */
+const featuredVideos: VideoItem[] = featuredWork.map((p, i) => ({
+  videoId: p.videoId,
+  title: p.title,
+  note: p.category.replace(/^For (an? )?/, ''),
+  ratio: i === 0 ? '16/9' : '9/16',
+  thumbnail: p.thumbnail,
+  category: 'commercial',
+}))
+
+/** True unless this visitor already saw Home's Selected Work during this visit. */
+function shouldShowFeatured() {
+  try {
+    return sessionStorage.getItem(SEEN_HOME_FEATURED) !== '1'
+  } catch {
+    return true
+  }
+}
+
 export default function Work() {
   const [view, setView] = useState<View>('video')
+  const [showFeatured] = useState(shouldShowFeatured)
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -229,7 +250,29 @@ export default function Work() {
             by WorkVideoGrid in list order. Images view: one masonry grid. */}
         <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
           {view === 'video' ? (
-            workSections.map((section, si) => {
+            <>
+            {/* Featured: Home's four films, shown only to visitors who did not
+                see them on Home this visit (e.g. someone sent the Work link). */}
+            {showFeatured && (
+              <section id="featured" aria-labelledby="work-featured" className="scroll-mt-36 md:scroll-mt-24">
+                <div className="mb-8 sm:mb-10">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h2 id="work-featured" className="text-[26px] leading-tight text-heading sm:text-[34px]">
+                      Featured
+                    </h2>
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
+                      {String(featuredVideos.length).padStart(2, '0')} films
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[15px] text-body sm:text-base">If you only watch four, watch these.</p>
+                </div>
+                <WorkVideoGrid
+                  items={featuredVideos}
+                  renderTile={(item, i) => <Tile item={item} type="video" index={i} onOpen={setLightbox} />}
+                />
+              </section>
+            )}
+            {workSections.map((section, si) => {
               const list = mainWorkVideos.filter((v) => v.category === section.key)
               if (list.length === 0) return null
               return (
@@ -237,7 +280,7 @@ export default function Work() {
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
+                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 || showFeatured ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
                 >
                   <div className="mb-8 sm:mb-10">
                     <div className="flex items-baseline justify-between gap-4">
@@ -279,7 +322,8 @@ export default function Work() {
                   )}
                 </section>
               )
-            })
+            })}
+            </>
           ) : (
             <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
               {images.map((item, i) => (

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { featuredWork } from '../data/featuredWork'
+import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
 import type { FeaturedProject } from '../data/featuredWork'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
 
@@ -110,6 +110,18 @@ function WorkTile({
 export default function FeaturedWork() {
   const [hero, ...rest] = featuredWork
   const [gridRef, revealed] = useReveal<HTMLDivElement>(0.12)
+
+  // Once these four have been on screen, the Work page skips its Featured row
+  // for the rest of this visit. Storage can be blocked; that just means the
+  // Featured row shows, which is the safe default.
+  useEffect(() => {
+    if (!revealed) return
+    try {
+      sessionStorage.setItem(SEEN_HOME_FEATURED, '1')
+    } catch {
+      /* ignore */
+    }
+  }, [revealed])
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const closeLightbox = useCallback(() => setLightbox(null), [])
 
