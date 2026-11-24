@@ -199,6 +199,22 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
+    videoId: 'UEplfTsxxeo',
+    title: 'Worth Holding On To',
+    note: 'Utopia Bedding, Quilted Pillow, Amazon Listing Film',
+    ratio: '16/9',
+    thumbnail: '/thumbs/utopia-quilted-pillow.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 's2u_Iw9g_a0',
+    title: 'Throw Everything at It',
+    note: 'Utopia Bedding, Bamboo Mattress Protector, Amazon Sponsored Ad',
+    ratio: '16/9',
+    thumbnail: '/thumbs/utopia-bamboo-mattress-protector.jpg',
+    category: 'commercial',
+  },
+  {
     videoId: 'V17p-69EF04',
     title: 'Everything Waits for 11.11',
     note: 'Daraz, 11.11 Sale, Spec Ad',
@@ -326,14 +342,6 @@ export const mainWorkVideos: VideoItem[] = [
     thumbnail: 'https://img.youtube.com/vi/2MDqA--HfGw/maxresdefault.jpg',
     category: 'commercial',
   },
-  {
-    videoId: 'Vy3EzZwrGD4',
-    title: 'Something in the Water',
-    note: 'Spec Ad, OpenArt Halloween Competition',
-    ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/Vy3EzZwrGD4/maxresdefault.jpg',
-    category: 'commercial',
-  },
 ]
 
 /**
@@ -394,6 +402,14 @@ export const secondWorkVideos: VideoItem[] = [
     note: 'Loop Coffee, Spec Ad',
     ratio: '9/16',
     thumbnail: 'https://img.youtube.com/vi/7dNexrTOCys/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'Vy3EzZwrGD4',
+    title: 'Something in the Water',
+    note: 'Spec Ad, OpenArt Halloween Competition',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/Vy3EzZwrGD4/maxresdefault.jpg',
     category: 'commercial',
   },
 ]
