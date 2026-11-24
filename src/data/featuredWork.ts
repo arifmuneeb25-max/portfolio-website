@@ -42,15 +42,15 @@ export type FeaturedProject = {
 export const featuredWork: FeaturedProject[] = [
   {
     index: '01',
-    title: 'Answer the Door in It',
-    category: 'For New York Threads',
-    slug: 'new-york-threads-bathrobe',
+    title: 'A Bathrobe Product Ad',
+    category: 'For NY Threads',
+    slug: 'ny-threads-bathrobe',
     videoId: 'TnX0blvHQgM',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'Answer the Door in It, a bathrobe product film for New York Threads. Video thumbnail.',
+      alt: 'A bathrobe product ad for NY Threads. Video thumbnail.',
     },
   },
   {
