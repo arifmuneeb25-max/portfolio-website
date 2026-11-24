@@ -191,6 +191,14 @@ export const sharedImages: ImageItem[] = [
  */
 export const mainWorkVideos: VideoItem[] = [
   {
+    videoId: 'OGmYTN0-q6U',
+    title: 'Dressed for Doing Nothing',
+    note: 'Utopia Brands, Bathrobe, Amazon Listing Film',
+    ratio: '16/9',
+    thumbnail: '/thumbs/utopia-bathrobe.jpg',
+    category: 'commercial',
+  },
+  {
     videoId: 'V17p-69EF04',
     title: 'Everything Waits for 11.11',
     note: 'Daraz, 11.11 Sale, Spec Ad',
@@ -295,14 +303,6 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
-    videoId: 'i7nwOhjaBIs',
-    title: 'Warm Enough to Stay In',
-    note: 'Utopia Brands, Fleece Blanket, Product Ad',
-    ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/i7nwOhjaBIs/maxresdefault.jpg',
-    category: 'commercial',
-  },
-  {
     videoId: '76lDopB_nqE',
     title: 'Caught in 4K',
     note: 'Personal Concept, UGC Spec',
@@ -311,11 +311,11 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'story',
   },
   {
-    videoId: 'vGgxMBdk0Dg',
-    title: 'A Reason to Fly Home',
-    note: 'Air Karachi, Spec Ad',
+    videoId: '8bfadufmMYo',
+    title: 'Pizza in Bed, No Regrets',
+    note: 'Utopia Brands, Mattress Protector, Amazon Listing Film',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/8bfadufmMYo/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -341,11 +341,11 @@ export const mainWorkVideos: VideoItem[] = [
  */
 export const secondWorkVideos: VideoItem[] = [
   {
-    videoId: 'wYXxiaZo7a4',
-    title: 'Fluff It Back to Life',
-    note: 'Utopia Brands, Poly Fill Stuffing, Product Ad',
+    videoId: 'vGgxMBdk0Dg',
+    title: 'A Reason to Fly Home',
+    note: 'Air Karachi, Spec Ad',
     ratio: '16/9',
-    thumbnail: 'https://img.youtube.com/vi/wYXxiaZo7a4/maxresdefault.jpg',
+    thumbnail: 'https://img.youtube.com/vi/vGgxMBdk0Dg/maxresdefault.jpg',
     category: 'commercial',
   },
   {
@@ -405,6 +405,22 @@ export const videos = mainWorkVideos
  * decided. Nothing renders this list.
  */
 export const parkedVideos: VideoItem[] = [
+  {
+    videoId: 'i7nwOhjaBIs',
+    title: 'Warm Enough to Stay In',
+    note: 'Utopia Brands, Fleece Blanket, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/i7nwOhjaBIs/maxresdefault.jpg',
+    category: 'commercial',
+  },
+  {
+    videoId: 'wYXxiaZo7a4',
+    title: 'Fluff It Back to Life',
+    note: 'Utopia Brands, Poly Fill Stuffing, Product Ad',
+    ratio: '16/9',
+    thumbnail: 'https://img.youtube.com/vi/wYXxiaZo7a4/maxresdefault.jpg',
+    category: 'commercial',
+  },
   {
     videoId: 'LNqK4FWMOl4',
     title: 'Threads Worth Wearing',
