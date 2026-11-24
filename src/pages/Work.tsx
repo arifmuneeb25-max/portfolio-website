@@ -88,7 +88,7 @@ function Tile({
                 />
               )}
               <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-mist/50 bg-black/30 backdrop-blur-[2px] text-cream/70 transition duration-300 group-hover:border-gold/80 group-hover:bg-black/50 group-hover:text-gold sm:h-14 sm:w-14">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-mist/50 bg-black/30 backdrop-blur-[2px] text-cream/70 transition duration-300 group-hover:border-gold/80 group-hover:bg-black/50 group-hover:text-gold sm:h-14 sm:w-14">
                   <PlayIcon />
                 </span>
               </div>
@@ -149,8 +149,8 @@ function Tile({
       </div>
 
       <div className="mt-3.5 block w-full text-left">
-        <p className="font-medium text-cream m-0 p-0 block text-base sm:text-lg leading-snug tracking-normal transition-colors duration-300 group-hover:text-gold">{item.title}</p>
-        <p className="mt-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-gold leading-normal m-0 p-0 block">{item.note}</p>
+        <p className="font-medium text-cream m-0 p-0 block text-[15px] sm:text-lg leading-snug tracking-normal transition-colors duration-300 group-hover:text-gold">{item.title}</p>
+        <p className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-gold sm:text-[11px] sm:tracking-[0.14em] leading-normal m-0 p-0 block">{item.note}</p>
       </div>
     </button>
   )

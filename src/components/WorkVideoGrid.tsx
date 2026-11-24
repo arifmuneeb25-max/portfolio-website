@@ -14,7 +14,7 @@ function isVertical(v: VideoItem) {
  * 1. Lead: the first 16:9 film runs full width, but only when the 16:9 count
  *    is odd, so the films after it pair up evenly. With an even count there
  *    is no lead and every 16:9 film sits in a pair.
- * 2. Horizontal grid: the other 16:9 films, 2 across at 640px+, 1 across below.
+ * 2. Horizontal grid: the other 16:9 films, 2 across at every width (phones too).
  * 3. Vertical row: the 9:16 films. 3 across at 640px+, or 4 across at 1024px+
  *    when the count divides by 4 (so four reels never leave one behind).
  *    Below 640px it is a swipeable row (the next tile peeks in).
@@ -42,7 +42,7 @@ export default function WorkVideoGrid({
       {lead && <div>{renderTile(lead, n++)}</div>}
 
       {rest.length > 0 && (
-        <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 sm:gap-x-6">
+        <div className="grid grid-cols-2 gap-x-3 sm:gap-x-6">
           {rest.map((v) => (
             <div key={v.videoId}>{renderTile(v, n++)}</div>
           ))}
