@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
+import WorkSectionHeader from '../components/WorkSectionHeader'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
 import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
 import { mainWorkVideos, secondWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
@@ -270,22 +271,16 @@ export default function Work() {
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
+                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-7 sm:mt-12' : ''}`}
                 >
-                  <div className="mb-8 sm:mb-10">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h2
-                        id={`work-${section.key}`}
-                        className="text-[26px] leading-tight text-heading sm:text-[34px]"
-                      >
-                        {section.label}
-                      </h2>
-                      <span className="text-[11px] uppercase tracking-[0.18em] text-muted">
-                        {String(list.length).padStart(2, '0')} {list.length === 1 ? 'film' : 'films'}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-[15px] text-body sm:text-base">{section.line}</p>
-                  </div>
+                  <WorkSectionHeader
+                    id={section.key}
+                    slug={section.slug}
+                    label={section.label}
+                    line={section.line}
+                    count={list.length}
+                    upNext={si > 0}
+                  />
                   <WorkVideoGrid
                     items={list}
                     renderTile={(item, i) => (
@@ -295,10 +290,10 @@ export default function Work() {
 
                   {/* See more: opens /work/more straight at this same section. */}
                   {secondWorkVideos.some((v) => v.category === section.key) && (
-                    <div className="mt-4 flex justify-center">
+                    <div className="mt-2 flex justify-center">
                       <Link
                         to={`/work/more#${section.slug}`}
-                        className="group inline-flex min-h-[44px] items-center gap-2 text-[15px] tracking-[0.04em] text-cream transition-colors duration-300 hover:text-gold"
+                        className="group inline-flex h-12 items-center gap-2.5 rounded-full border border-gold/70 bg-gold/[0.06] px-6 text-[12px] uppercase tracking-[0.16em] text-heading transition-colors duration-300 hover:bg-gold/15"
                       >
                         See more {section.label.toLowerCase()}
                         <span

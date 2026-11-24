@@ -209,9 +209,17 @@ Each section is laid out by `WorkVideoGrid`. Rules, in order:
 Phone tile styling (below 640px, in the `Tile` component in both Work pages):
 smaller play button (36px), 15px titles, 10px notes, so pairs stay readable.
 
-### 8.3 "See more" links
+### 8.3 Section headings, "Up next" card and "See more" buttons
 
-Under each section on `/work` there is a link to the same section on `/work/more`:
+Section headings come from `components/WorkSectionHeader.tsx` (used by both Work
+pages). The first section gets a plain heading. Every later section renders as
+an **"Up next" card** (gold "UP NEXT" label, section name, "7 films. <line>",
+gold ↓ circle); tapping it scrolls that section to the top. This replaced a thin
+divider line that made the page look finished after Commercials, so people
+missed Short Stories.
+
+Under each section on `/work` there is a gold-outlined **button** to the same
+section on `/work/more`:
 "See more commercials" → `/work/more#commercials`, "See more short stories" →
 `/work/more#short-stories`. `MoreWork.tsx` reads the `#hash` on arrival and scrolls
 to that section below the nav. A link only shows if `/work/more` has videos in
@@ -434,3 +442,5 @@ Hands, Sorted, Every Kitchen Has One, Sink Right In.
 | #17 | Utopia quilted mattress film; pillowcases and Mother's Day shift |
 | #18 | "Utopia Brands" label everywhere |
 | #19 | Work films two per row on phones; smaller phone play button and labels |
+| #20 | This project guide, AGENTS.md and CLAUDE.md |
+| #21 | "See more" becomes a button; later sections open with an "Up next" card |
