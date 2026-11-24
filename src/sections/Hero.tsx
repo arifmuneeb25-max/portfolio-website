@@ -3,7 +3,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 const EASE = [0.16, 1, 0.3, 1] as const
 
 /**
- * BEAT 1 — opening shot. Full viewport (100dvh with 100vh fallback), inset frame,
+ * BEAT 1 — opening shot. Full viewport on md+ (100dvh with 100vh fallback); on phones it
+ * fills the screen below the 116px nav so the headline stays on the first screen. Inset frame,
  * background video with film grain and gradients for legibility. Text held to left ~58%
  * on desktop, full width on mobile.
  */
@@ -11,7 +12,7 @@ export default function Hero() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="relative min-h-[100vh] min-h-[100dvh] h-[100dvh] p-3 sm:p-4 md:p-6">
+    <section className="relative h-[calc(100dvh-7.25rem)] min-h-[520px] p-3 sm:p-4 md:h-[100dvh] md:min-h-[100vh] md:min-h-[100dvh] md:p-6">
       <div className="relative h-full w-full overflow-hidden rounded-2xl md:rounded-[2rem]">
         {/* Background video */}
         <video

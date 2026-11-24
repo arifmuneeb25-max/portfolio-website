@@ -237,7 +237,7 @@ export default function Work() {
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
+                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-16 border-t border-white/10 pt-12 sm:mt-24 sm:pt-16' : ''}`}
                 >
                   <div className="mb-8 sm:mb-10">
                     <div className="flex items-baseline justify-between gap-4">
