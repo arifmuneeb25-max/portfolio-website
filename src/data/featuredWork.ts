@@ -46,6 +46,8 @@ export const featuredWork: FeaturedProject[] = [
     category: 'For NY Threads',
     slug: 'ny-threads-bathrobe',
     videoId: 'TnX0blvHQgM',
+    // Frame from three quarters through the film: over the shoulder, her laugh, robe in the foreground.
+    thumbnail: '/thumbs/ny-threads-bathrobe.jpg',
     media: {
       type: 'video',
       src: null,
