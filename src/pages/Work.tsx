@@ -182,12 +182,12 @@ function shouldShowHomeVideos() {
 /**
  * Commercials list, plus Home's four as ordinary tiles for visitors who have
  * not seen them on Home: the 16:9 film goes second (beside the first
- * commercial), the 9:16 reels join the end of the reel row. No label, no
+ * commercial), the 9:16 reels take the first reel row. No label, no
  * separate section, so nothing reads as more important than the rest.
  */
 function withHomeVideos(list: VideoItem[]) {
   const [wide, ...reels] = homeVideos
-  return [...list.slice(0, 1), wide, ...list.slice(1), ...reels]
+  return [...list.slice(0, 1), wide, ...reels, ...list.slice(1)]
 }
 
 export default function Work() {
