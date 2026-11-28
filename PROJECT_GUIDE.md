@@ -248,6 +248,12 @@ into Selected Work, remove it from `mainWorkVideos`.
 The page label at the top of `/work` reads "Work" (it used to read "Selected
 Work", which clashed with this section).
 
+Where the page starts: Home's "View all work" opens `/work#commercials`, and
+`Work.tsx` scrolls to the `#hash` section on arrival (below the sticky nav), so
+those visitors start at the "Up next: Commercials" card and can scroll up to
+Selected Work. Every other way in (the Work tab, a shared link) has no hash and
+starts at the top.
+
 ---
 
 ## 9. Home "Selected Work" logic
@@ -258,7 +264,9 @@ a Home `title`, a Home `category` label ("For [Brand]") and a Work `note`
 
 - Entry 1 runs full width; entries 2 to 4 sit in one row below it (3 across from
   640px, a sideways swipe row on phones). Keep all four horizontal.
-- Each tile opens the Lightbox. "View all work" links to `/work`.
+- Each tile opens the Lightbox. "View all work" links to `/work#commercials`, so
+  visitors coming from Home start at Commercials (they have just seen Selected
+  Work); Selected Work stays on the page above.
 - Copy style is plain and descriptive: title "A ___ Ad", label "For [Brand]"
   (for example "A Bathrobe Product Ad" / "For NY Threads").
 - The same four films appear at the top of `/work` (section 8.4).
@@ -454,3 +462,4 @@ Hands, Sorted, Every Kitchen Has One, Sink Right In.
 | #21 | "See more" becomes a button; later sections open with an "Up next" card |
 | #22 | Selected Work becomes three 16:9 films (bathrobe, quilted pillow, fleece) on Home and at the top of Work for everyone; session logic removed; the three reels move to Work Commercials; Work page label becomes "Work" |
 | #23 | Selected Work grows to four 16:9 films (bathrobe lead + a row of three); Worth Holding On To moves from Commercials into it as "A Quilted Pillow Ad"; the pink-set film is renamed "A Quilted Cushion Ad" |
+| #24 | Home's "View all work" opens /work#commercials; Work scrolls to a #section on arrival |

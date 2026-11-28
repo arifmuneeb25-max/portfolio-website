@@ -142,10 +142,11 @@ export default function FeaturedWork() {
           </div>
         </div>
 
-        {/* View all work link — 44px min hit area */}
+        {/* View all work: opens /work scrolled to Commercials. Selected Work stays
+            above it on that page; these visitors have just seen those films here. */}
         <div className="mt-12 flex justify-center">
           <Link
-            to="/work"
+            to="/work#commercials"
             className="group inline-flex min-h-[44px] items-center gap-2 text-[15px] tracking-[0.04em] text-cream transition-colors duration-300 hover:text-gold"
           >
             View all work
