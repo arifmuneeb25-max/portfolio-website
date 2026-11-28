@@ -162,7 +162,7 @@ const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /**
- * Selected Work: the same three 16:9 films as Home, shown at the top of Work
+ * Selected Work: the same four 16:9 films as Home, shown at the top of Work
  * for every visitor. Titles match Home; the label uses the Work note.
  */
 const selectedVideos: VideoItem[] = featuredWork.map((p) => ({
@@ -251,12 +251,13 @@ export default function Work() {
                 id="selected"
                 slug="selected-work"
                 label="Selected Work"
-                line="Three films to start with."
+                line="Four films to start with."
                 count={selectedVideos.length}
                 upNext={false}
               />
               <WorkVideoGrid
                 items={selectedVideos}
+                wideLayout="leadRow"
                 renderTile={(item, i) => <Tile item={item} type="video" index={i} onOpen={setLightbox} />}
               />
             </section>

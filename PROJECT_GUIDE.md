@@ -75,7 +75,7 @@ src/
   index.css                 design tokens (:root), component classes, animations
   data/                     ALL editable content lives here (see below)
     workData.ts             every Work video, the Work sections, parked videos, image galleries
-    featuredWork.ts         "Selected Work" (3 films): shown on Home and at the top of Work
+    featuredWork.ts         "Selected Work" (4 films): shown on Home and at the top of Work
     services.ts             the 7 services
     about.ts                About page acts, method stages, trusted-by
     nav.ts                  nav links (Home, Work, Services, About, Contact)
@@ -114,7 +114,7 @@ changes happen in `src/components/`, `src/pages/` and `src/sections/`.
 
 | Route | File | What it is |
 |---|---|---|
-| `/` | `pages/Home.tsx` | Hero video, Thesis statement, Selected Work (3 films), Director, closing CTA, Footer |
+| `/` | `pages/Home.tsx` | Hero video, Thesis statement, Selected Work (4 films), Director, closing CTA, Footer |
 | `/work` | `pages/Work.tsx` | Main portfolio: Video tab (Selected Work, Commercials, Short Stories) and Images tab |
 | `/work/more` | `pages/MoreWork.tsx` | "Beyond the Reel": more Commercials and Short Stories, same layout |
 | `/services` | `pages/Services.tsx` | 7 services from `data/services.ts`, editorial alternating layout |
@@ -205,6 +205,9 @@ Each section is laid out by `WorkVideoGrid`. Rules, in order:
    1024px when the count divides by 4 (so four reels never leave one alone).
    On phones they become a **sideways swipe row**, with the next reel peeking in.
 4. Within each format, order follows the list order in the data file.
+5. Exception: `wideLayout="leadRow"` (used only by Selected Work) puts the first
+   16:9 film full width and every other 16:9 film in one row below it (3 across
+   from 640px, a swipe row on phones).
 
 Phone tile styling (below 640px, in the `Tile` component in both Work pages):
 smaller play button (36px), 15px titles, 10px notes, so pairs stay readable.
@@ -229,17 +232,18 @@ that category.
 ### 8.4 Selected Work section on the Work page
 
 `/work` opens with a **Selected Work** section (heading "Selected Work", line
-"Three films to start with.") showing the same three 16:9 films as Home, for
+"Four films to start with.") showing the same four 16:9 films as Home, for
 every visitor. They come straight from `src/data/featuredWork.ts`, so changing
-Home's films changes this section too. Layout follows the grid rules: three 16:9
-films give one full-width lead plus a pair. Commercials and Short Stories follow,
-each opening with an "Up next" card.
+Home's films changes this section too. Layout: the bathrobe film full width, the
+other three in one row below (`wideLayout="leadRow"`). Commercials and Short
+Stories follow, each opening with an "Up next" card.
 
 History: an earlier version used a `sessionStorage` flag to show Home's films on
 Work only to visitors who had not seen Home. Muneeb replaced it on 28 November
 2026 with this always-visible section; someone coming from Home sees the three
-films on both pages, which is intended. The three Selected Work films do **not**
-also appear inside Commercials, so nothing repeats on the same page.
+films on both pages, which is intended. Selected Work films do **not** also
+appear inside Commercials, so nothing repeats on the same page: when a film moves
+into Selected Work, remove it from `mainWorkVideos`.
 
 The page label at the top of `/work` reads "Work" (it used to read "Selected
 Work", which clashed with this section).
@@ -248,16 +252,19 @@ Work", which clashed with this section).
 
 ## 9. Home "Selected Work" logic
 
-Data: `src/data/featuredWork.ts`, three entries, all **16:9**, in order. Each has
+Data: `src/data/featuredWork.ts`, four entries, all **16:9**, in order. Each has
 a Home `title`, a Home `category` label ("For [Brand]") and a Work `note`
 ("Brand, Product, Type") used by the Work page's Selected Work section.
 
-- Entry 1 runs full width; entries 2 and 3 sit side by side below it, at every
-  screen size (phones included). Keep all three horizontal.
+- Entry 1 runs full width; entries 2 to 4 sit in one row below it (3 across from
+  640px, a sideways swipe row on phones). Keep all four horizontal.
 - Each tile opens the Lightbox. "View all work" links to `/work`.
 - Copy style is plain and descriptive: title "A ___ Ad", label "For [Brand]"
   (for example "A Bathrobe Product Ad" / "For NY Threads").
-- The same three films appear at the top of `/work` (section 8.4).
+- The same four films appear at the top of `/work` (section 8.4).
+- Two quilted pillow films are in the set, so their Home titles name the product
+  difference: "A Quilted Cushion Ad" (pink set, sofa cushions) and "A Quilted
+  Pillow Ad" (navy studio, bed pillow).
 - Vertical reels no longer go on Home; they live in Work > Commercials.
 
 ---
@@ -286,7 +293,7 @@ The cover is what people judge before pressing play, so it matters.
   When none of the published frames is good, export a frame from the master edit
   and save it into `public/thumbs/`.
 - Known covers that still carry on-screen text (replace when a clean frame is
-  available): A Quilted Pillow Ad (every published frame has text; the cover is
+  available): A Quilted Cushion Ad (every published frame has text; the cover is
   the four-scene frame with "ON THE SOFA BY THE BED ANYWHERE"),
   What Your Pillow Has Seen ("Helps Keep Your Pillow Clean"),
   An Outdoor Pillows Ad ("PERFECT for Garden Benches"), Before the First Step,
@@ -353,8 +360,9 @@ separately, and a section with an odd number of 16:9 films shows the first as
 the full-width lead.
 
 **Change a Selected Work film (Home and top of Work)**: edit
-`src/data/featuredWork.ts`. Keep all three 16:9, fill `title`, `category` and
-`note`, and use local `/thumbs/` covers.
+`src/data/featuredWork.ts`. Keep all four 16:9, fill `title`, `category` and
+`note`, use local `/thumbs/` covers, and remove the film from `mainWorkVideos` if
+it was there.
 
 **Add an image gallery**: add the images under `public/assets/<name>/`, add an
 array in `workData.ts`, then an item in `sharedImages` with `gallery`.
@@ -369,12 +377,15 @@ array in `workData.ts`, then an item in `sharedImages` with `gallery`.
 | # | Title | Home label | Work note | YouTube | Cover |
 |---|---|---|---|---|---|
 | 1 | A Bathrobe Product Ad | For NY Threads | NY Threads, Bathrobe, Product Ad | TnX0blvHQgM | /thumbs/ny-threads-bathrobe.jpg |
-| 2 | A Quilted Pillow Ad | For Utopia Brands | Utopia Brands, Quilted Pillow, Amazon Listing Film | 1MApmfzbJhY | /thumbs/utopia-quilted-cushion-pillow.jpg |
+| 2 | A Quilted Cushion Ad | For Utopia Brands | Utopia Brands, Quilted Cushion Pillow, Amazon Listing Film | 1MApmfzbJhY | /thumbs/utopia-quilted-cushion-pillow.jpg |
 | 3 | A Fleece Blanket Ad | For Utopia Brands | Utopia Brands, Fleece Blanket, Amazon Sponsored Ad | ZlS4LiIu904 | /thumbs/utopia-fleece-blanket.jpg |
+| 4 | A Quilted Pillow Ad | For Utopia Brands | Utopia Brands, Quilted Pillow, Amazon Listing Film | UEplfTsxxeo | /thumbs/utopia-quilted-pillow.jpg |
+
+(Film 4 was "Worth Holding On To" in Commercials before it moved here.)
 
 ### Work, Commercials (`mainWorkVideos`, category `commercial`), in display order
-16:9: Dressed for Doing Nothing (OGmYTN0-q6U, lead), Worth Holding On To
-(UEplfTsxxeo), Throw Everything at It (s2u_Iw9g_a0), Everything Waits for 11.11
+16:9 (eight, so no lead; four pairs): Dressed for Doing Nothing (OGmYTN0-q6U),
+Throw Everything at It (s2u_Iw9g_a0), Everything Waits for 11.11
 (V17p-69EF04), Where the Long Day Ends (0RMtduDUdOE), The Last Listing You Open
 (DEpcdM3Divc), What Your Pillow Has Seen (0emVRApaPLo), Pizza in Bed, No Regrets
 (8bfadufmMYo), Before the First Step (2MDqA--HfGw).
@@ -442,3 +453,4 @@ Hands, Sorted, Every Kitchen Has One, Sink Right In.
 | #20 | This project guide, AGENTS.md and CLAUDE.md |
 | #21 | "See more" becomes a button; later sections open with an "Up next" card |
 | #22 | Selected Work becomes three 16:9 films (bathrobe, quilted pillow, fleece) on Home and at the top of Work for everyone; session logic removed; the three reels move to Work Commercials; Work page label becomes "Work" |
+| #23 | Selected Work grows to four 16:9 films (bathrobe lead + a row of three); Worth Holding On To moves from Commercials into it as "A Quilted Pillow Ad"; the pink-set film is renamed "A Quilted Cushion Ad" |

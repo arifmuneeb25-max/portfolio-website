@@ -7,14 +7,15 @@ step recipes for common changes.
 Key rules:
 
 - Content lives in `src/data/` (`workData.ts` for Work videos, `featuredWork.ts`
-  for the three Selected Work films). Change data there, not in components.
+  for the four Selected Work films). Change data there, not in components.
 - Whatever is on `main` is live (Cloudflare Pages deploys it automatically).
   Run `npm run build` and make sure it passes before merging.
 - Work layout rules (`src/components/WorkVideoGrid.tsx`): 16:9 films on top,
   9:16 reels below; never leave a single film alone on a row; a full-width lead
   only when a section's 16:9 count is odd.
-- Selected Work (`featuredWork.ts`, three 16:9 films) shows on Home and as the
-  first section of `/work` for every visitor. See guide sections 8.4 and 9.
+- Selected Work (`featuredWork.ts`, four 16:9 films) shows on Home and as the
+  first section of `/work` for every visitor; those films are not repeated in
+  Commercials. See guide sections 8.4 and 9.
 - Covers: prefer clean frames without burned-in text, saved in `public/thumbs/`.
 - Copy: story-led titles; notes as `Brand, Product, Type`; "Utopia Brands" for
   Utopia work; no em dashes as connectors; no banned words (guide section 11).

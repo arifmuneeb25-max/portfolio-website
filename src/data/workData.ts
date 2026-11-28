@@ -199,14 +199,6 @@ export const mainWorkVideos: VideoItem[] = [
     category: 'commercial',
   },
   {
-    videoId: 'UEplfTsxxeo',
-    title: 'Worth Holding On To',
-    note: 'Utopia Brands, Quilted Pillow, Amazon Listing Film',
-    ratio: '16/9',
-    thumbnail: '/thumbs/utopia-quilted-pillow.jpg',
-    category: 'commercial',
-  },
-  {
     videoId: 's2u_Iw9g_a0',
     title: 'Throw Everything at It',
     note: 'Utopia Brands, Bamboo Mattress Protector, Amazon Sponsored Ad',
