@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import WorkSectionHeader from '../components/WorkSectionHeader'
@@ -201,6 +201,18 @@ export default function Work() {
     tiles.forEach((t) => io.observe(t))
     return () => io.disconnect()
   }, [view])
+
+  // Arriving with a section in the URL (Home's "View all work" uses
+  // /work#commercials): start the page at that section, below the sticky nav.
+  // Everything above it (Selected Work) stays on the page.
+  const { hash } = useLocation()
+  useEffect(() => {
+    if (!hash) return
+    const el = document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (!el) return
+    const id = requestAnimationFrame(() => el.scrollIntoView({ block: 'start' }))
+    return () => cancelAnimationFrame(id)
+  }, [hash])
 
   const closeLightbox = useCallback(() => setLightbox(null), [])
 
