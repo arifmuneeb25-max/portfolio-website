@@ -103,8 +103,8 @@ function WorkTile({
 }
 
 /**
- * BEAT 3 — Selected Work. Three 16:9 films: the first runs full width, the
- * other two sit side by side below it at every screen size.
+ * BEAT 3 — Selected Work. Four 16:9 films: the first runs full width, the
+ * other three sit in one row below it (a swipeable row on phones).
  */
 export default function FeaturedWork() {
   const [hero, ...rest] = featuredWork
@@ -126,16 +126,18 @@ export default function FeaturedWork() {
             <WorkTile project={hero} ratio="16/9" hero delay={0} onOpen={setLightbox} />
           )}
 
-          {/* Row 2 — the other 16:9 films, two across at every width. */}
-          <div className="mt-4 grid grid-cols-2 items-start gap-3 sm:mt-6 sm:gap-6">
+          {/* Row 2 — the other 16:9 films in one row: 3 across from 640px, a
+              swipeable row below that runs off the right edge so the next film peeks in. */}
+          <div className="-mr-5 mt-4 flex snap-x snap-mandatory items-start gap-3 overflow-x-auto pr-5 [scrollbar-width:none] sm:mr-0 sm:mt-6 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:pr-0 [&::-webkit-scrollbar]:hidden">
             {rest.map((project, i) => (
-              <WorkTile
-                key={project.slug}
-                project={project}
-                ratio="16/9"
-                delay={0.08 * (i + 1)}
-                onOpen={setLightbox}
-              />
+              <div key={project.slug} className="w-[72%] shrink-0 snap-start sm:w-auto">
+                <WorkTile
+                  project={project}
+                  ratio="16/9"
+                  delay={0.08 * (i + 1)}
+                  onOpen={setLightbox}
+                />
+              </div>
             ))}
           </div>
         </div>

@@ -25,12 +25,37 @@ function isVertical(v: VideoItem) {
 export default function WorkVideoGrid({
   items,
   renderTile,
+  wideLayout = 'pairs',
 }: {
   items: VideoItem[]
   renderTile: (item: VideoItem, index: number) => ReactNode
+  /**
+   * 'pairs' (default): the rules above. 'leadRow': the first 16:9 film full
+   * width and every other 16:9 film in one row below it (3 across from 640px,
+   * a swipeable row on phones). Used by Selected Work.
+   */
+  wideLayout?: 'pairs' | 'leadRow'
 }) {
   const wide = items.filter((v) => !isVertical(v))
   const tall = items.filter(isVertical)
+  if (wideLayout === 'leadRow') {
+    const [first, ...others] = wide
+    let k = 0
+    return (
+      <div>
+        {first && <div>{renderTile(first, k++)}</div>}
+        {others.length > 0 && (
+          <div className="-mx-2 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] sm:-mx-3 sm:flex-wrap sm:justify-center sm:overflow-visible [&::-webkit-scrollbar]:hidden">
+            {others.map((v) => (
+              <div key={v.videoId} className="w-[72%] shrink-0 snap-start px-2 sm:w-1/3 sm:px-3">
+                {renderTile(v, k++)}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
   const hasLead = wide.length % 2 === 1
   const lead = hasLead ? wide[0] : undefined
   const rest = hasLead ? wide.slice(1) : wide

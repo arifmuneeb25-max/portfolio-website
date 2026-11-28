@@ -37,8 +37,9 @@ export type FeaturedProject = {
 }
 
 /**
- * The three Selected Work films: shown on Home and as the Selected Work section
- * at the top of the Work page. All three are 16:9; the first is the wide lead.
+ * The four Selected Work films: shown on Home and as the Selected Work section
+ * at the top of the Work page. All four are 16:9; the first is the wide lead and
+ * the other three sit in one row below it.
  * Single source of truth for the exhibition preview; reorder, retitle or swap
  * media here.
  */
@@ -61,9 +62,9 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '02',
-    title: 'A Quilted Pillow Ad',
+    title: 'A Quilted Cushion Ad',
     category: 'For Utopia Brands',
-    note: 'Utopia Brands, Quilted Pillow, Amazon Listing Film',
+    note: 'Utopia Brands, Quilted Cushion Pillow, Amazon Listing Film',
     slug: 'utopia-quilted-cushion-pillow',
     videoId: '1MApmfzbJhY',
     thumbnail: '/thumbs/utopia-quilted-cushion-pillow.jpg',
@@ -71,7 +72,7 @@ export const featuredWork: FeaturedProject[] = [
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A quilted pillow Amazon listing film for Utopia Brands. Video thumbnail.',
+      alt: 'A quilted cushion Amazon listing film for Utopia Brands. Video thumbnail.',
     },
   },
   {
@@ -88,6 +89,21 @@ export const featuredWork: FeaturedProject[] = [
       src: null,
       poster: null,
       alt: 'A fleece blanket Amazon sponsored ad for Utopia Brands. Video thumbnail.',
+    },
+  },
+  {
+    index: '04',
+    title: 'A Quilted Pillow Ad',
+    category: 'For Utopia Brands',
+    note: 'Utopia Brands, Quilted Pillow, Amazon Listing Film',
+    slug: 'utopia-quilted-pillow',
+    videoId: 'UEplfTsxxeo',
+    thumbnail: '/thumbs/utopia-quilted-pillow.jpg',
+    media: {
+      type: 'video',
+      src: null,
+      poster: null,
+      alt: 'A quilted pillow Amazon listing film for Utopia Brands. Video thumbnail.',
     },
   },
 ]
