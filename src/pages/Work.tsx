@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import WorkVideoGrid from '../components/WorkVideoGrid'
 import WorkSectionHeader from '../components/WorkSectionHeader'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
-import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
+import { featuredWork } from '../data/featuredWork'
 import { mainWorkVideos, secondWorkVideos, sharedImages, workSections, type VideoItem, type ImageItem } from '../data/workData'
 
 const images: ImageItem[] = sharedImages
@@ -161,39 +161,21 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/** Home's four Selected Work films, shaped as Work tiles (first is 16:9, the rest 9:16). */
-const homeVideos: VideoItem[] = featuredWork.map((p, i) => ({
+/**
+ * Selected Work: the same three 16:9 films as Home, shown at the top of Work
+ * for every visitor. Titles match Home; the label uses the Work note.
+ */
+const selectedVideos: VideoItem[] = featuredWork.map((p) => ({
   videoId: p.videoId,
   title: p.title,
-  note: p.category.replace(/^For (an? )?/, ''),
-  ratio: i === 0 ? '16/9' : '9/16',
+  note: p.note,
+  ratio: '16/9',
   thumbnail: p.thumbnail,
   category: 'commercial',
 }))
 
-/** True unless this visitor already saw Home's Selected Work during this visit. */
-function shouldShowHomeVideos() {
-  try {
-    return sessionStorage.getItem(SEEN_HOME_FEATURED) !== '1'
-  } catch {
-    return true
-  }
-}
-
-/**
- * Commercials list, plus Home's four as ordinary tiles for visitors who have
- * not seen them on Home: the 16:9 film goes second (beside the first
- * commercial), the 9:16 reels take the first reel row. No label, no
- * separate section, so nothing reads as more important than the rest.
- */
-function withHomeVideos(list: VideoItem[]) {
-  const [wide, ...reels] = homeVideos
-  return [...list.slice(0, 1), wide, ...reels, ...list.slice(1)]
-}
-
 export default function Work() {
   const [view, setView] = useState<View>('video')
-  const [showHomeVideos] = useState(shouldShowHomeVideos)
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -227,7 +209,7 @@ export default function Work() {
     <main className="min-h-screen overflow-x-hidden bg-surface text-heading">
       <div className="site-container max-w-6xl py-12 sm:py-16 md:py-24">
         <p className="text-[11px] uppercase tracking-[0.28em] text-gold sm:text-[12px]">
-          {view === 'video' ? 'Selected Work' : 'Design Work'}
+          {view === 'video' ? 'Work' : 'Design Work'}
         </p>
         <p className="mt-3 text-[18px] text-heading sm:mt-4 sm:text-[20px]">
           {view === 'video'
@@ -258,20 +240,35 @@ export default function Work() {
           ))}
         </div>
 
-        {/* Video view: two sections, Commercials then Short Stories, each laid out
-            by WorkVideoGrid in list order. Images view: one masonry grid. */}
+        {/* Video view: Selected Work (Home's three films), then Commercials and
+            Short Stories, each laid out by WorkVideoGrid in list order. The later
+            sections open with an "Up next" card. Images view: one masonry grid. */}
         <div key={view} ref={gridRef} className="mt-8 sm:mt-10">
           {view === 'video' ? (
-            workSections.map((section, si) => {
-              const base = mainWorkVideos.filter((v) => v.category === section.key)
-              const list = section.key === 'commercial' && showHomeVideos ? withHomeVideos(base) : base
+            <>
+            <section id="selected-work" aria-labelledby="work-selected" className="scroll-mt-36 md:scroll-mt-24">
+              <WorkSectionHeader
+                id="selected"
+                slug="selected-work"
+                label="Selected Work"
+                line="Three films to start with."
+                count={selectedVideos.length}
+                upNext={false}
+              />
+              <WorkVideoGrid
+                items={selectedVideos}
+                renderTile={(item, i) => <Tile item={item} type="video" index={i} onOpen={setLightbox} />}
+              />
+            </section>
+            {workSections.map((section) => {
+              const list = mainWorkVideos.filter((v) => v.category === section.key)
               if (list.length === 0) return null
               return (
                 <section
                   key={section.key}
                   id={section.slug}
                   aria-labelledby={`work-${section.key}`}
-                  className={`scroll-mt-36 md:scroll-mt-24 ${si > 0 ? 'mt-7 sm:mt-12' : ''}`}
+                  className="mt-7 scroll-mt-36 sm:mt-12 md:scroll-mt-24"
                 >
                   <WorkSectionHeader
                     id={section.key}
@@ -279,7 +276,7 @@ export default function Work() {
                     label={section.label}
                     line={section.line}
                     count={list.length}
-                    upNext={si > 0}
+                    upNext
                   />
                   <WorkVideoGrid
                     items={list}
@@ -307,7 +304,8 @@ export default function Work() {
                   )}
                 </section>
               )
-            })
+            })}
+            </>
           ) : (
             <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
               {images.map((item, i) => (
