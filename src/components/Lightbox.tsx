@@ -69,6 +69,27 @@ export default function Lightbox({
   const [isPlayingVideo, setIsPlayingVideo] = useState(false)
   const touchStartX = useRef<number | null>(null)
   const scrollPos = useRef<number>(0)
+  const closedByBack = useRef(false)
+
+  // The phone / browser Back button closes the player instead of leaving the
+  // site. Opening adds one history entry (same URL, router state kept so React
+  // Router sees no navigation); Back pops it and closes. Closing any other way
+  // (X, Escape, tapping outside) removes that entry again, so the next Back
+  // behaves normally.
+  useEffect(() => {
+    if (!target) return
+    window.history.pushState({ ...window.history.state, lightbox: true }, '')
+    const onPop = () => {
+      closedByBack.current = true
+      onClose()
+    }
+    window.addEventListener('popstate', onPop)
+    return () => {
+      window.removeEventListener('popstate', onPop)
+      if (!closedByBack.current && window.history.state?.lightbox) window.history.back()
+      closedByBack.current = false
+    }
+  }, [target, onClose])
 
   // Reset slider index and state when target changes
   useEffect(() => {
