@@ -132,6 +132,12 @@ with a YouTube embed (`youtube-nocookie.com`, autoplay). Escape, the close butto
 or tapping outside closes it. Image galleries open in the same component with
 arrows, swipe and a counter.
 
+Back button: opening the player adds one browser history entry (same URL), so
+the phone or browser **Back button closes the player** and leaves the visitor on
+the same page at the same scroll position, instead of leaving the site. Closing
+with X, Escape or a tap outside removes that entry, so the next Back works
+normally.
+
 ### Contact form
 `pages/Contact.tsx`. Fields: name, email, phone, service (options come from
 `data/services.ts`), message, plus a hidden honeypot for bots. Submits to
@@ -463,3 +469,4 @@ Hands, Sorted, Every Kitchen Has One, Sink Right In.
 | #22 | Selected Work becomes three 16:9 films (bathrobe, quilted pillow, fleece) on Home and at the top of Work for everyone; session logic removed; the three reels move to Work Commercials; Work page label becomes "Work" |
 | #23 | Selected Work grows to four 16:9 films (bathrobe lead + a row of three); Worth Holding On To moves from Commercials into it as "A Quilted Pillow Ad"; the pink-set film is renamed "A Quilted Cushion Ad" |
 | #24 | Home's "View all work" opens /work#commercials; Work scrolls to a #section on arrival |
+| #25 | Back button closes the video or gallery player instead of leaving the site |
