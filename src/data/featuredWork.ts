@@ -3,8 +3,10 @@ export type FeaturedProject = {
   index: string
   /** Display title, set in the project's own voice. */
   title: string
-  /** One-word category — no descriptions, the work speaks. */
+  /** Home label, e.g. "For NY Threads". */
   category: string
+  /** Label used on the Work page's Selected Work section: "Brand, Product, Type". */
+  note: string
   /** Route slug — reserved for a future /work/:slug detail page. */
   slug: string
   /**
@@ -35,7 +37,8 @@ export type FeaturedProject = {
 }
 
 /**
- * The four featured pieces previewed on Home — the first is the wide hero tile.
+ * The three Selected Work films: shown on Home and as the Selected Work section
+ * at the top of the Work page. All three are 16:9; the first is the wide lead.
  * Single source of truth for the exhibition preview; reorder, retitle or swap
  * media here.
  */
@@ -44,6 +47,7 @@ export const featuredWork: FeaturedProject[] = [
     index: '01',
     title: 'A Bathrobe Product Ad',
     category: 'For NY Threads',
+    note: 'NY Threads, Bathrobe, Product Ad',
     slug: 'ny-threads-bathrobe',
     videoId: 'TnX0blvHQgM',
     // Frame from three quarters through the film: over the shoulder, her laugh, robe in the foreground.
@@ -57,53 +61,34 @@ export const featuredWork: FeaturedProject[] = [
   },
   {
     index: '02',
-    title: 'A Meta Ad',
-    category: 'For OpenArt AI',
-    slug: 'openart',
-    videoId: '52Dcns0JX9k',
-    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
-    thumbnail: '/thumbs/openart-meta-ad.jpg',
+    title: 'A Quilted Pillow Ad',
+    category: 'For Utopia Brands',
+    note: 'Utopia Brands, Quilted Pillow, Amazon Listing Film',
+    slug: 'utopia-quilted-cushion-pillow',
+    videoId: '1MApmfzbJhY',
+    thumbnail: '/thumbs/utopia-quilted-cushion-pillow.jpg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'A Meta Ad for OpenArt AI. Video thumbnail.',
+      alt: 'A quilted pillow Amazon listing film for Utopia Brands. Video thumbnail.',
     },
   },
   {
     index: '03',
-    title: 'A Launch Hype Reel',
-    category: 'For a UK Brand Website',
-    slug: 'uk-launch-hype',
-    videoId: 'xJFqm9V3RcY',
-    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
-    thumbnail: '/thumbs/uk-launch-hype.jpg',
-    media: {
-      type: 'video',
-      src: null,
-      poster: null,
-      alt: 'A launch hype reel for a UK brand website. Video thumbnail.',
-    },
-  },
-  {
-    index: '04',
-    title: 'An Outdoor Pillows Ad',
+    title: 'A Fleece Blanket Ad',
     category: 'For Utopia Brands',
-    slug: 'outdoor-pillows',
-    videoId: '2c0kI6zEkhg',
-    // Native 9:16 frame from the Short, so the vertical tile stays sharp.
-    thumbnail: '/thumbs/outdoor-pillows.jpg',
+    note: 'Utopia Brands, Fleece Blanket, Amazon Sponsored Ad',
+    slug: 'utopia-fleece-blanket',
+    videoId: 'ZlS4LiIu904',
+    // Golden hour by the tent, wrapped in the fleece. Clean frame, no text.
+    thumbnail: '/thumbs/utopia-fleece-blanket.jpg',
     media: {
       type: 'video',
       src: null,
       poster: null,
-      alt: 'An AI UGC ad for Utopia Brands outdoor pillows. Video thumbnail.',
+      alt: 'A fleece blanket Amazon sponsored ad for Utopia Brands. Video thumbnail.',
     },
   },
 ]
 
-/**
- * Session flag set once a visitor has seen Home's Selected Work. The Work page
- * reads it to skip its Featured row, so the same four films never repeat.
- */
-export const SEEN_HOME_FEATURED = 'seen-home-featured'

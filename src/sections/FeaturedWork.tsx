@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { featuredWork, SEEN_HOME_FEATURED } from '../data/featuredWork'
+import { featuredWork } from '../data/featuredWork'
 import type { FeaturedProject } from '../data/featuredWork'
 import Lightbox, { videoThumb, thumbFallback, type LightboxTarget } from '../components/Lightbox'
 
@@ -103,25 +103,13 @@ function WorkTile({
 }
 
 /**
- * BEAT 3 — Selected Work.
- * 16:9 hero tile goes full width.
- * Three 9:16 tiles go 3 across at 768px+, and a swipeable row below 768px.
+ * BEAT 3 — Selected Work. Three 16:9 films: the first runs full width, the
+ * other two sit side by side below it at every screen size.
  */
 export default function FeaturedWork() {
   const [hero, ...rest] = featuredWork
   const [gridRef, revealed] = useReveal<HTMLDivElement>(0.12)
 
-  // Once these four have been on screen, the Work page skips its Featured row
-  // for the rest of this visit. Storage can be blocked; that just means the
-  // Featured row shows, which is the safe default.
-  useEffect(() => {
-    if (!revealed) return
-    try {
-      sessionStorage.setItem(SEEN_HOME_FEATURED, '1')
-    } catch {
-      /* ignore */
-    }
-  }, [revealed])
   const [lightbox, setLightbox] = useState<LightboxTarget>(null)
   const closeLightbox = useCallback(() => setLightbox(null), [])
 
@@ -138,18 +126,16 @@ export default function FeaturedWork() {
             <WorkTile project={hero} ratio="16/9" hero delay={0} onOpen={setLightbox} />
           )}
 
-          {/* Row 2 — three equal 9:16 tiles. 768px+: 3 across. Below 768px: a
-              swipeable row that runs off the right edge so the next reel peeks in. */}
-          <div className="-mr-5 mt-4 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pr-5 [scrollbar-width:none] sm:-mr-6 sm:mt-6 sm:pr-6 md:mr-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:pr-0 [&::-webkit-scrollbar]:hidden">
+          {/* Row 2 — the other 16:9 films, two across at every width. */}
+          <div className="mt-4 grid grid-cols-2 items-start gap-3 sm:mt-6 sm:gap-6">
             {rest.map((project, i) => (
-              <div key={project.slug} className="w-[62%] shrink-0 snap-start sm:w-[42%] md:w-auto">
-                <WorkTile
-                  project={project}
-                  ratio="9/16"
-                  delay={0.08 * (i + 1)}
-                  onOpen={setLightbox}
-                />
-              </div>
+              <WorkTile
+                key={project.slug}
+                project={project}
+                ratio="16/9"
+                delay={0.08 * (i + 1)}
+                onOpen={setLightbox}
+              />
             ))}
           </div>
         </div>

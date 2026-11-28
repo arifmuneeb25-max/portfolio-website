@@ -6,7 +6,7 @@ come up most (adding, replacing and moving videos). It is written so a person or
 an AI coding tool can pick up the project cold and make changes safely.
 
 Live site: https://muneebarifai.com
-Snapshot of content in this guide: 24 November 2026. The data files are always
+Snapshot of content in this guide: 28 November 2026. The data files are always
 the source of truth; update section 13 when you change content.
 
 ---
@@ -75,7 +75,7 @@ src/
   index.css                 design tokens (:root), component classes, animations
   data/                     ALL editable content lives here (see below)
     workData.ts             every Work video, the Work sections, parked videos, image galleries
-    featuredWork.ts         Home "Selected Work" (4 films) + session flag name
+    featuredWork.ts         "Selected Work" (3 films): shown on Home and at the top of Work
     services.ts             the 7 services
     about.ts                About page acts, method stages, trusted-by
     nav.ts                  nav links (Home, Work, Services, About, Contact)
@@ -114,8 +114,8 @@ changes happen in `src/components/`, `src/pages/` and `src/sections/`.
 
 | Route | File | What it is |
 |---|---|---|
-| `/` | `pages/Home.tsx` | Hero video, Thesis statement, Selected Work (4 films), Director, closing CTA, Footer |
-| `/work` | `pages/Work.tsx` | Main portfolio: Video tab (Commercials, Short Stories) and Images tab |
+| `/` | `pages/Home.tsx` | Hero video, Thesis statement, Selected Work (3 films), Director, closing CTA, Footer |
+| `/work` | `pages/Work.tsx` | Main portfolio: Video tab (Selected Work, Commercials, Short Stories) and Images tab |
 | `/work/more` | `pages/MoreWork.tsx` | "Beyond the Reel": more Commercials and Short Stories, same layout |
 | `/services` | `pages/Services.tsx` | 7 services from `data/services.ts`, editorial alternating layout |
 | `/about` | `pages/About.tsx` | Banner, five "acts" story, The Method stepper, Trusted By |
@@ -212,7 +212,8 @@ smaller play button (36px), 15px titles, 10px notes, so pairs stay readable.
 ### 8.3 Section headings, "Up next" card and "See more" buttons
 
 Section headings come from `components/WorkSectionHeader.tsx` (used by both Work
-pages). The first section gets a plain heading. Every later section renders as
+pages). The first section on the page gets a plain heading (on `/work` that is
+Selected Work; on `/work/more` it is Commercials). Every later section renders as
 an **"Up next" card** (gold "UP NEXT" label, section name, "7 films. <line>",
 gold ↓ circle); tapping it scrolls that section to the top. This replaced a thin
 divider line that made the page look finished after Commercials, so people
@@ -225,47 +226,39 @@ section on `/work/more`:
 to that section below the nav. A link only shows if `/work/more` has videos in
 that category.
 
-### 8.4 Home films on the Work page (no repeats)
+### 8.4 Selected Work section on the Work page
 
-Problem solved: people sent straight to `/work` never saw the four Home films,
-but people who came from Home should not see them twice.
+`/work` opens with a **Selected Work** section (heading "Selected Work", line
+"Three films to start with.") showing the same three 16:9 films as Home, for
+every visitor. They come straight from `src/data/featuredWork.ts`, so changing
+Home's films changes this section too. Layout follows the grid rules: three 16:9
+films give one full-width lead plus a pair. Commercials and Short Stories follow,
+each opening with an "Up next" card.
 
-How it works:
-1. When Home's Selected Work section scrolls into view, `sections/FeaturedWork.tsx`
-   writes `sessionStorage['seen-home-featured'] = '1'` (key exported as
-   `SEEN_HOME_FEATURED` from `data/featuredWork.ts`). It is not a cookie, nothing
-   is sent anywhere, and it clears when the tab closes.
-2. `pages/Work.tsx` reads that flag once on load:
-   - **Flag missing** (opened the Work link directly): the four Home films are
-     added to **Commercials** as ordinary tiles, no label, no separate section.
-     The 16:9 Home film goes **second** (beside the first commercial). The three
-     9:16 Home reels take the **first reel row**; the regular reels move to the
-     row after. (Function `withHomeVideos`.)
-   - **Flag present** (they saw them on Home): Commercials shows only its own films.
-3. Failure always falls back to showing the four (private mode, storage blocked,
-   new tab). It never hides something the visitor has not seen.
+History: an earlier version used a `sessionStorage` flag to show Home's films on
+Work only to visitors who had not seen Home. Muneeb replaced it on 28 November
+2026 with this always-visible section; someone coming from Home sees the three
+films on both pages, which is intended. The three Selected Work films do **not**
+also appear inside Commercials, so nothing repeats on the same page.
 
-Notes: this was a deliberate choice over a "Featured" section, because a
-"Featured" label would imply those four are the best work. To test the direct
-visitor view, open `/work` in a private tab. Home tile titles are reused on Work;
-"For X" in the Home label becomes "X" on Work.
+The page label at the top of `/work` reads "Work" (it used to read "Selected
+Work", which clashed with this section).
 
 ---
 
 ## 9. Home "Selected Work" logic
 
-Data: `src/data/featuredWork.ts`, four entries, in order.
+Data: `src/data/featuredWork.ts`, three entries, all **16:9**, in order. Each has
+a Home `title`, a Home `category` label ("For [Brand]") and a Work `note`
+("Brand, Product, Type") used by the Work page's Selected Work section.
 
-- Entry 1 is the wide **16:9** tile (full width). Entries 2 to 4 are **9:16** reels.
-  The section assumes this shape; keep the first one horizontal and the next
-  three vertical.
-- Desktop: wide tile on top, three reels side by side below.
-- Phones: wide tile on top, the three reels in a sideways swipe row.
+- Entry 1 runs full width; entries 2 and 3 sit side by side below it, at every
+  screen size (phones included). Keep all three horizontal.
 - Each tile opens the Lightbox. "View all work" links to `/work`.
-- Copy style here is plain and descriptive: title "A ___ Ad/Film/Reel", label
-  "For [Brand]" (for example "A Bathrobe Product Ad" / "For NY Threads").
-- Changing these four also changes what direct visitors see in Work > Commercials
-  (section 8.4), automatically.
+- Copy style is plain and descriptive: title "A ___ Ad", label "For [Brand]"
+  (for example "A Bathrobe Product Ad" / "For NY Threads").
+- The same three films appear at the top of `/work` (section 8.4).
+- Vertical reels no longer go on Home; they live in Work > Commercials.
 
 ---
 
@@ -293,7 +286,9 @@ The cover is what people judge before pressing play, so it matters.
   When none of the published frames is good, export a frame from the master edit
   and save it into `public/thumbs/`.
 - Known covers that still carry on-screen text (replace when a clean frame is
-  available): What Your Pillow Has Seen ("Helps Keep Your Pillow Clean"),
+  available): A Quilted Pillow Ad (every published frame has text; the cover is
+  the four-scene frame with "ON THE SOFA BY THE BED ANYWHERE"),
+  What Your Pillow Has Seen ("Helps Keep Your Pillow Clean"),
   An Outdoor Pillows Ad ("PERFECT for Garden Benches"), Before the First Step,
   Winners Lose More, A Carnival Film. Clocked In, Checked Out is only 640×360.
 
@@ -357,8 +352,9 @@ paste it into `secondWorkVideos`.
 separately, and a section with an odd number of 16:9 films shows the first as
 the full-width lead.
 
-**Change a Home film**: edit `src/data/featuredWork.ts`. Keep entry 1 16:9 and
-entries 2 to 4 vertical. Use local `/thumbs/` covers.
+**Change a Selected Work film (Home and top of Work)**: edit
+`src/data/featuredWork.ts`. Keep all three 16:9, fill `title`, `category` and
+`note`, and use local `/thumbs/` covers.
 
 **Add an image gallery**: add the images under `public/assets/<name>/`, add an
 array in `workData.ts`, then an item in `sharedImages` with `gallery`.
@@ -367,24 +363,25 @@ array in `workData.ts`, then an item in `sharedImages` with `gallery`.
 
 ---
 
-## 13. Current content snapshot (24 November 2026)
+## 13. Current content snapshot (28 November 2026)
 
-### Home, Selected Work (`featuredWork.ts`)
-| # | Title | Label | YouTube | Cover |
-|---|---|---|---|---|
-| 1 (16:9) | A Bathrobe Product Ad | For NY Threads | TnX0blvHQgM | /thumbs/ny-threads-bathrobe.jpg |
-| 2 (9:16) | A Meta Ad | For OpenArt AI | 52Dcns0JX9k | /thumbs/openart-meta-ad.jpg |
-| 3 (9:16) | A Launch Hype Reel | For a UK Brand Website | xJFqm9V3RcY | /thumbs/uk-launch-hype.jpg |
-| 4 (9:16) | An Outdoor Pillows Ad | For Utopia Brands | 2c0kI6zEkhg | /thumbs/outdoor-pillows.jpg |
+### Selected Work (`featuredWork.ts`): Home and the top of Work
+| # | Title | Home label | Work note | YouTube | Cover |
+|---|---|---|---|---|---|
+| 1 | A Bathrobe Product Ad | For NY Threads | NY Threads, Bathrobe, Product Ad | TnX0blvHQgM | /thumbs/ny-threads-bathrobe.jpg |
+| 2 | A Quilted Pillow Ad | For Utopia Brands | Utopia Brands, Quilted Pillow, Amazon Listing Film | 1MApmfzbJhY | /thumbs/utopia-quilted-cushion-pillow.jpg |
+| 3 | A Fleece Blanket Ad | For Utopia Brands | Utopia Brands, Fleece Blanket, Amazon Sponsored Ad | ZlS4LiIu904 | /thumbs/utopia-fleece-blanket.jpg |
 
 ### Work, Commercials (`mainWorkVideos`, category `commercial`), in display order
-16:9: Dressed for Doing Nothing (OGmYTN0-q6U, lead for visitors from Home),
-Worth Holding On To (UEplfTsxxeo), Throw Everything at It (s2u_Iw9g_a0),
-Everything Waits for 11.11 (V17p-69EF04), Where the Long Day Ends (0RMtduDUdOE),
-The Last Listing You Open (DEpcdM3Divc), What Your Pillow Has Seen (0emVRApaPLo),
-Pizza in Bed, No Regrets (8bfadufmMYo), Before the First Step (2MDqA--HfGw).
-9:16: Sorted Before the Kettle Boils (BfaJzmyYOHw), The Sheet That Actually Fits
-(JRavp3hUfTM), Her Routine, Restocked (hDJfkR8eR2s).
+16:9: Dressed for Doing Nothing (OGmYTN0-q6U, lead), Worth Holding On To
+(UEplfTsxxeo), Throw Everything at It (s2u_Iw9g_a0), Everything Waits for 11.11
+(V17p-69EF04), Where the Long Day Ends (0RMtduDUdOE), The Last Listing You Open
+(DEpcdM3Divc), What Your Pillow Has Seen (0emVRApaPLo), Pizza in Bed, No Regrets
+(8bfadufmMYo), Before the First Step (2MDqA--HfGw).
+9:16, first row: A Meta Ad (52Dcns0JX9k, OpenArt AI), A Launch Hype Reel
+(xJFqm9V3RcY, UK brand website), An Outdoor Pillows Ad (2c0kI6zEkhg, Utopia
+Brands). Second row: Sorted Before the Kettle Boils (BfaJzmyYOHw), The Sheet That
+Actually Fits (JRavp3hUfTM), Her Routine, Restocked (hDJfkR8eR2s).
 
 ### Work, Short Stories (category `story`)
 16:9: Winners Lose More (_P1JNmNTNK0), Even the Miseries Are Beautiful
@@ -444,3 +441,4 @@ Hands, Sorted, Every Kitchen Has One, Sink Right In.
 | #19 | Work films two per row on phones; smaller phone play button and labels |
 | #20 | This project guide, AGENTS.md and CLAUDE.md |
 | #21 | "See more" becomes a button; later sections open with an "Up next" card |
+| #22 | Selected Work becomes three 16:9 films (bathrobe, quilted pillow, fleece) on Home and at the top of Work for everyone; session logic removed; the three reels move to Work Commercials; Work page label becomes "Work" |
